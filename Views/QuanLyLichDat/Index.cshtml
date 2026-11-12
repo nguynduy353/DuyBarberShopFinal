@@ -1,0 +1,362 @@
+@model IEnumerable<DuyBarberShop.Models.LichDat>
+@using DuyBarberShop.Models
+
+@{
+    ViewData["Title"] = "Quản lý lịch đặt";
+    Layout = "_AdminLayout";
+    var nhanViens = ViewBag.NhanViens as List<NhanVien>
+        ?? new List<NhanVien>();
+    var bayGio = DateTime.Now;
+    var lichDatsSapXep = Model
+        .OrderBy(lich => lich.TrangThai == "DangThucHien" ? 0 :
+                             lich.TrangThai == "ChoXacNhan" || lich.TrangThai == "DaXacNhan" ? 1 :
+                             lich.TrangThai == "DaHoanThanh" ? 2 : 3)
+        .ThenBy(lich => lich.TrangThai == "DaHoanThanh" || lich.TrangThai == "DaHuy"
+            ? -lich.ThoiGianBatDau.Ticks
+            : lich.ThoiGianBatDau < bayGio ? 0 : 1)
+        .ThenBy(lich => lich.TrangThai == "DaHoanThanh" || lich.TrangThai == "DaHuy"
+            ? -lich.ThoiGianBatDau.Ticks
+            : lich.ThoiGianBatDau < bayGio ? -lich.ThoiGianBatDau.Ticks : lich.ThoiGianBatDau.Ticks)
+        .ToList();
+    var tenDichVus = Model
+        .SelectMany(lich => lich.ChiTietLichDats)
+        .Where(ct => ct.DichVu != null)
+        .Select(ct => ct.DichVu.TenDichVu)
+        .Distinct()
+        .OrderBy(ten => ten)
+        .ToList();
+}
+
+<div class="qlld-page">
+
+    <div class="qlld-heading">
+        <h2 class="fw-bold mb-2">Quản lý lịch đặt</h2>
+        <p class="text-muted">
+            Danh sách lịch đặt của khách hàng tại DuyBarberShop.
+        </p>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    <div class="qlld-panel">
+        <div class="qlld-panel-head">
+            <div>
+                <h2 class="qlld-panel-title">Danh sách lịch đặt</h2>
+                <p class="qlld-panel-count">Tổng cộng @Model.Count() lịch đặt</p>
+            </div>
+        </div>
+        <div class="qlld-filters" aria-label="Bộ lọc lịch đặt">
+            <div class="qlld-filter-field qlld-search-field">
+                <label for="qlld-search">Tìm khách hàng</label>
+                <input id="qlld-search" type="search" placeholder="Nhập tên khách hàng..." autocomplete="off" />
+            </div>
+            <div class="qlld-filter-field">
+                <label for="qlld-status">Trạng thái</label>
+                <select id="qlld-status">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="ChoXacNhan">Chờ xác nhận</option>
+                    <option value="DaXacNhan">Đã xác nhận</option>
+                    <option value="DangThucHien">Đang thực hiện</option>
+                    <option value="DaHoanThanh">Đã hoàn thành</option>
+                    <option value="DaHuy">Đã hủy</option>
+                </select>
+            </div>
+            <div class="qlld-filter-field">
+                <label for="qlld-service">Dịch vụ</label>
+                <select id="qlld-service">
+                    <option value="">Tất cả dịch vụ</option>
+                    @foreach (var tenDichVu in tenDichVus)
+                    {
+                        <option value="@tenDichVu">@tenDichVu</option>
+                    }
+                </select>
+            </div>
+            <div class="qlld-filter-field">
+                <label for="qlld-from">Từ ngày</label>
+                <input id="qlld-from" type="date" />
+            </div>
+            <div class="qlld-filter-field">
+                <label for="qlld-to">Đến ngày</label>
+                <input id="qlld-to" type="date" />
+            </div>
+            <div class="qlld-filter-field qlld-filter-action">
+                <button type="button" id="qlld-reset">Xóa bộ lọc</button>
+            </div>
+        </div>
+        <div class="qlld-table-scroll">
+            <table class="qlld-table">
+
+                <thead>
+                    <tr>
+                        <th>Mã lịch</th>
+                        <th>Khách hàng</th>
+                        <th>Thời gian</th>
+                        <th>Dịch vụ</th>
+                        <th>Tổng tiền</th>
+                        <th>Nhân viên</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var lich in lichDatsSapXep)
+                    {
+                        var tongTien = lich.ChiTietLichDats
+                            .Sum(ct => ct.DonGia);
+
+                        <tr class="qlld-booking-row"
+                            data-customer="@lich.KhachHang?.HoTen"
+                            data-status="@lich.TrangThai"
+                            data-services="@string.Join("|", lich.ChiTietLichDats.Select(ct => ct.DichVu.TenDichVu))"
+                            data-start="@lich.ThoiGianBatDau.ToString("yyyy-MM-ddTHH:mm")">
+                            <td><span class="qlld-code">#@lich.MaLichDat</span></td>
+
+                            <td>
+                                <strong class="qlld-name">@lich.KhachHang?.HoTen</strong>
+                                <div class="text-muted small">
+                                    @lich.KhachHang?.SoDienThoai
+                                </div>
+                            </td>
+
+                            <td>
+                                @lich.ThoiGianBatDau.ToString("dd/MM/yyyy")
+                                <div class="text-muted small">
+                                    @lich.ThoiGianBatDau.ToString("HH:mm")
+                                    -
+                                    @lich.ThoiGianKetThuc.ToString("HH:mm")
+                                </div>
+                            </td>
+
+                            <td>
+                                @string.Join(", ",
+                                    lich.ChiTietLichDats
+                                        .Select(ct => ct.DichVu.TenDichVu))
+                            </td>
+
+                            <td class="qlld-money">
+                                @tongTien.ToString("N0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))đ
+                            </td>
+
+                            <td>
+                                @if (lich.NhanVien != null)
+                                {
+                                    @lich.NhanVien.TaiKhoan.HoTen
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Chưa phân công
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (lich.TrangThai == "ChoXacNhan")
+                                {
+                                    <span class="qlld-status qlld-pending">
+                                        Chờ xác nhận
+                                    </span>
+                                }
+                                else if (lich.TrangThai == "DaXacNhan")
+                                {
+                                    <span class="qlld-status qlld-confirmed">
+                                        Đã xác nhận
+                                    </span>
+                                }
+                                else if (lich.TrangThai == "DangThucHien")
+                                {
+                                    <span class="qlld-status qlld-progress">
+                                        Đang thực hiện
+                                    </span>
+                                }
+                                else if (lich.TrangThai == "DaHoanThanh")
+                                {
+                                    <span class="qlld-status qlld-completed">
+                                        Đã hoàn thành
+                                    </span>
+                                }
+                                else if (lich.TrangThai == "DaHuy")
+                                {
+                                    <span class="qlld-status qlld-cancelled">
+                                        Đã hủy
+                                    </span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (lich.TrangThai == "ChoXacNhan")
+                                {
+                                    <form asp-controller="QuanLyLichDat"
+                                          asp-action="XacNhan"
+                                          method="post"
+                                          class="d-flex flex-column gap-2">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="MaLichDat"
+                                               value="@lich.MaLichDat" />
+
+                                        <select name="MaNhanVien"
+                                                class="form-select form-select-sm"
+                                                required>
+                                            <option value="">
+                                                -- Chọn nhân viên --
+                                            </option>
+
+                                            @foreach (var nv in nhanViens)
+                                            {
+                                                <option value="@nv.MaNhanVien">
+                                                    @nv.TaiKhoan.HoTen
+                                                </option>
+                                            }
+                                        </select>
+
+                                        <button type="submit"
+                                                class="qlld-btn-primary qlld-btn-assign"
+                                                onclick="return confirm('Xác nhận lịch và phân công nhân viên này?');">
+                                            Xác nhận
+                                        </button>
+                                    </form>
+                                }
+                                else if (lich.TrangThai == "DaXacNhan")
+                                {
+                                    <form asp-controller="QuanLyLichDat"
+                                          asp-action="BatDau"
+                                          method="post">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@lich.MaLichDat" />
+
+                                        <button type="submit"
+                                                class="qlld-btn-primary btn-start"
+                                                onclick="return confirm('Bắt đầu thực hiện lịch này?');">
+                                            Bắt đầu
+                                        </button>
+                                    </form>
+                                }
+                                else if (lich.TrangThai == "DangThucHien")
+                                {
+                                    <form asp-controller="QuanLyLichDat"
+                                          asp-action="HoanThanh"
+                                          method="post">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@lich.MaLichDat" />
+
+                                        <button type="submit"
+                                                class="qlld-btn-primary qlld-btn-complete"
+                                                onclick="return confirm('Xác nhận đã hoàn thành lịch này?');">
+                                            Hoàn thành
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                    <tr id="qlld-no-results" style="display:none">
+                        <td colspan="8" class="text-center text-muted py-4">
+                            Không tìm thấy lịch đặt phù hợp với bộ lọc.
+                        </td>
+                    </tr>
+
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="8"
+                                class="text-center text-muted py-4">
+                                Chưa có lịch đặt nào.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const search = document.getElementById("qlld-search");
+        const status = document.getElementById("qlld-status");
+        const service = document.getElementById("qlld-service");
+        const from = document.getElementById("qlld-from");
+        const to = document.getElementById("qlld-to");
+        const reset = document.getElementById("qlld-reset");
+        const rows = Array.from(document.querySelectorAll(".qlld-booking-row"));
+        const count = document.querySelector(".qlld-panel-count");
+        const noResults = document.getElementById("qlld-no-results");
+
+        // Không phân biệt dấu tiếng Việt khi tìm tên khách hàng.
+        function normalize(value) {
+            return (value || "").normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/đ/g, "d").replace(/Đ/g, "D")
+                .toLowerCase().trim();
+        }
+
+        function filterBookings() {
+            const keyword = normalize(search.value);
+            let visible = 0;
+            rows.forEach(function(row) {
+                const namesMatch = normalize(row.dataset.customer).includes(keyword);
+                const statusMatch = !status.value || row.dataset.status === status.value;
+                const services = (row.dataset.services || "").split("|");
+                const serviceMatch = !service.value || services.includes(service.value);
+                const start = row.dataset.start || "";
+                const bookingDate = start.slice(0, 10);
+                const fromMatch = !from.value || bookingDate >= from.value;
+                const toMatch = !to.value || bookingDate <= to.value;
+                const show = namesMatch && statusMatch && serviceMatch && fromMatch && toMatch;
+                row.style.display = show ? "" : "none";
+                if (show) visible++;
+            });
+            count.textContent = "Hiển thị " + visible + " / " + rows.length + " lịch đặt";
+            noResults.style.display = rows.length > 0 && visible === 0 ? "" : "none";
+        }
+
+        [search, status, service, from, to].forEach(function(control) {
+            control.addEventListener("input", filterBookings);
+            control.addEventListener("change", filterBookings);
+        });
+        reset.addEventListener("click", function() {
+            search.value = "";
+            status.value = "";
+            service.value = "";
+            from.value = "";
+            to.value = "";
+            filterBookings();
+        });
+        filterBookings();
+    });
+</script>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/QuanLyLichDat/Index.css" asp-append-version="true" />
+}

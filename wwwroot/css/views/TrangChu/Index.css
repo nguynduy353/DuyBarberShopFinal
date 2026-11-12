@@ -1,0 +1,887 @@
+/* View: TrangChu/Index.cshtml */
+
+.duy-home {
+        background: #FAF8FE;
+        color: #142336;
+        width: 100vw;
+        max-width: none;
+        position: relative;
+        left: 50%;
+        margin-left: -50vw;
+    }
+
+        .duy-home .duy-display {
+            font-family: 'Anton', Impact, sans-serif;
+            font-weight: 400;
+            letter-spacing: .8px;
+        }
+
+    .duy-carousel {
+        position: relative;
+        height: clamp(420px, 45vw, 650px);
+        overflow: hidden;
+        background: #101820;
+        touch-action: pan-y;
+    }
+
+    .duy-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .75s ease, visibility .75s;
+    }
+
+        .duy-slide.is-active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .duy-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .duy-slide::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,rgba(6,13,20,.91) 0%,rgba(6,13,20,.66) 38%,rgba(6,13,20,.08) 100%);
+        }
+
+    .duy-slide-copy {
+        position: absolute;
+        z-index: 1;
+        left: max(8%,calc((100% - 1150px)/2));
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff;
+        max-width: 590px;
+        padding-right: 20px;
+    }
+
+    .duy-eyebrow {
+        color: #f4b67a;
+        letter-spacing: 3px;
+        font-size: 13px;
+        font-weight: 800;
+        margin-bottom: 15px;
+    }
+
+    .duy-slide-copy h1 {
+        font-size: clamp(46px,5.4vw,82px);
+        line-height: 1.1;
+        margin: 0 0 20px;
+        text-transform: uppercase;
+    }
+
+        .duy-slide-copy h1 span {
+            color: #f0a465;
+        }
+
+    .duy-slide-copy p {
+        font-size: 17px;
+        line-height: 1.7;
+        color: #f1e9e2;
+        max-width: 440px;
+    }
+
+    .duy-primary-btn {
+        display: inline-block;
+        background: #d99355;
+        color: #111 !important;
+        font-family: 'Anton',Impact,sans-serif;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        padding: 14px 27px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 16px;
+        transition: background .2s,transform .2s;
+    }
+
+        .duy-primary-btn:hover {
+            background: #f2b77d;
+            transform: translateY(-2px);
+        }
+
+    .duy-arrow {
+        position: absolute;
+        z-index: 3;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        border: 1px solid rgba(255,255,255,.7);
+        border-radius: 50%;
+        background: rgba(0,0,0,.3);
+        color: white;
+        font-size: 30px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+        .duy-arrow:hover {
+            background: #d99355;
+            color: #141414;
+        }
+
+    .duy-prev {
+        left: 20px;
+    }
+
+    .duy-next {
+        right: 20px;
+    }
+
+    .duy-dots {
+        position: absolute;
+        z-index: 3;
+        bottom: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+    }
+
+    .duy-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        border: 1px solid white;
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+    }
+
+        .duy-dot.is-active {
+            background: #d99355;
+            border-color: #d99355;
+        }
+
+    .duy-benefits {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 24px;
+        max-width: 1150px;
+        margin: 0 auto;
+        padding: 30px 20px;
+    }
+
+    .duy-benefit {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border-right: 1px solid #ded6cc;
+    }
+
+        .duy-benefit:last-child {
+            border-right: 0;
+        }
+
+    .duy-benefit-icon {
+        color: #bc793e;
+        font-size: 29px;
+    }
+
+    .duy-benefit h3 {
+        font-size: 19px;
+        margin: 0 0 5px;
+    }
+
+    .duy-benefit p {
+        margin: 0;
+        color: #69717b;
+        font-size: 14px;
+    }
+
+    .duy-services {
+        background: #191b1e;
+        padding: 65px 20px 75px;
+    }
+
+    .duy-services-inner {
+        max-width: 1150px;
+        margin: auto;
+    }
+
+    .duy-services h2 {
+        color: #fff;
+        text-align: center;
+        font-size: 43px;
+        margin-bottom: 32px;
+    }
+
+    .duy-service-grid {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 22px;
+    }
+
+    .duy-service {
+        background: #FAF8FE;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(217,147,85,.25);
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+        .duy-service:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 35px rgba(0,0,0,.28);
+        }
+
+    .duy-service-image {
+        height: 245px;
+        overflow: hidden;
+        background: #30251f;
+    }
+
+        .duy-service-image img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .45s ease;
+        }
+
+    .duy-service:hover .duy-service-image img {
+        transform: scale(1.06);
+    }
+
+    .duy-service-content {
+        padding: 25px 28px 28px;
+    }
+
+    .duy-service h3 {
+        font-size: 27px;
+        margin: 0 0 10px;
+    }
+
+    .duy-service p {
+        color: #6c6d70;
+        margin: 0 0 14px;
+    }
+
+    .duy-service strong {
+        display: block;
+        color: #b9733b;
+        font-size: 23px;
+        margin-bottom: 18px;
+    }
+
+    .duy-service a {
+        display: inline-block;
+        color: #142336;
+        font-weight: 700;
+        text-decoration: none;
+        border-bottom: 2px solid #d99355;
+        padding-bottom: 4px;
+        transition: color .2s ease;
+    }
+
+        .duy-service a:hover {
+            color: #b9733b;
+        }
+
+    .duy-all-services {
+        text-align: center;
+        margin-top: 32px;
+    }
+
+    @@media (max-width:768px) {
+        .duy-carousel {
+            height: 520px;
+        }
+
+        .duy-slide img {
+            object-position: 65% center;
+        }
+
+        .duy-slide::after {
+            background: linear-gradient(90deg,rgba(6,13,20,.92),rgba(6,13,20,.48));
+        }
+
+        .duy-slide-copy {
+            left: 9%;
+            right: 9%;
+            padding: 0;
+        }
+
+            .duy-slide-copy h1 {
+                font-size: 46px;
+            }
+
+            .duy-slide-copy p {
+                font-size: 15px;
+            }
+
+        .duy-arrow {
+            width: 34px;
+            height: 34px;
+            font-size: 22px;
+            top: auto;
+            bottom: 12px;
+            transform: none;
+        }
+
+        .duy-prev {
+            left: 14px;
+        }
+
+        .duy-next {
+            right: 14px;
+        }
+
+        .duy-benefits {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .duy-benefit {
+            border-right: 0;
+        }
+
+        .duy-service-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .duy-service-image {
+            height: 260px;
+        }
+    }
+
+    @@media (prefers-reduced-motion:reduce) {
+        .duy-slide {
+            transition: none;
+        }
+    }
+
+    /* Giới thiệu DuyBarberShop - ngay dưới Dịch vụ nổi bật */
+    .duy-about {
+        background: #FAF8FE;
+        padding: 90px 24px 100px;
+        scroll-margin-top: 90px;
+    }
+
+    .duy-about-inner {
+        max-width: 1150px;
+        margin: 0 auto;
+    }
+
+    .duy-about-intro {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 60px;
+        margin-bottom: 42px;
+    }
+
+    .duy-about-kicker {
+        display: block;
+        color: #b9733b;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+    }
+
+    .duy-about h2 {
+        font-size: clamp(40px, 4.5vw, 65px);
+        line-height: 1.12;
+        margin: 0 0 22px;
+        color: #142336;
+    }
+
+        .duy-about h2 span {
+            color: #c98249;
+        }
+
+    .duy-about-description {
+        font-size: 16px;
+        line-height: 1.9;
+        color: #5f6872;
+        margin: 0 0 15px;
+    }
+
+    .duy-about-feature {
+        min-height: 290px;
+        background: #17202a;
+        color: #fff;
+        border-radius: 14px;
+        padding: 38px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .duy-about-feature::before {
+            content: '✂';
+            position: absolute;
+            right: 25px;
+            top: -40px;
+            font-size: 240px;
+            line-height: 1;
+            color: rgba(217,147,85,.12);
+            transform: rotate(-18deg);
+        }
+
+    .duy-about-feature-label {
+        color: #f0ad75;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        position: relative;
+    }
+
+    .duy-about-feature strong {
+        font-size: clamp(28px, 3vw, 40px);
+        line-height: 1.2;
+        margin-top: 14px;
+        position: relative;
+    }
+
+    .duy-about-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: 22px;
+    }
+
+    .duy-about-card {
+        position: relative;
+        isolation: isolate;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 370px;
+        overflow: hidden;
+        border-radius: 14px;
+        padding: 30px 26px;
+        background-color: #17202a;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        box-shadow: 0 10px 30px rgba(20,35,54,.13);
+        transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+        .duy-about-card::before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(12,17,23,.05) 0%, rgba(12,17,23,.42) 38%, rgba(12,17,23,.94) 100%);
+        }
+
+        .duy-about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 35px rgba(20,35,54,.2);
+        }
+
+    .duy-about-card--space {
+        background-image: url('/images/about/khong-gian.jpg');
+    }
+
+    .duy-about-card--equipment {
+        background-image: url('/images/about/thiet-bi.jpg');
+    }
+
+    .duy-about-card--team {
+        background-image: url('/images/about/tay-nghe.jpg');
+    }
+
+    .duy-about-card h3 {
+        font-size: 23px;
+        line-height: 1.25;
+        margin: 0 0 12px;
+        color: #fff;
+        text-shadow: 0 1px 4px rgba(0,0,0,.25);
+    }
+
+    .duy-about-card p {
+        margin: 0;
+        color: rgba(255,255,255,.91);
+        line-height: 1.65;
+        font-size: 14px;
+    }
+
+    .duy-about-cta {
+        text-align: center;
+        margin-top: 42px;
+    }
+
+        .duy-about-cta .duy-primary-btn {
+            background: #d99355;
+            color: #111111 !important;
+        }
+
+            .duy-about-cta .duy-primary-btn:hover {
+                background: #f2b77d;
+            }
+
+    @@media (max-width: 850px) {
+        .duy-about {
+            padding: 65px 20px 75px;
+        }
+
+        .duy-about-intro {
+            grid-template-columns: 1fr;
+            gap: 26px;
+        }
+
+        .duy-about-feature {
+            min-height: 210px;
+        }
+
+        .duy-about-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+    }
+
+    /* Banner cá nhân hóa kiểu tóc – bố cục ảnh lớn + 4 ảnh nhỏ */
+    .duy-hair-section {
+        width: 100%;
+        background: #1d1612;
+        color: #fff;
+        scroll-margin-top: 85px
+    }
+
+    .duy-hair-carousel {
+        position: relative;
+        width: 100%;
+        min-height: 590px;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 50%,#493328,#1c1512 74%)
+    }
+
+    .duy-hair-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .55s ease,visibility .55s;
+        pointer-events: none
+    }
+
+        .duy-hair-slide.is-active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+            pointer-events: auto
+        }
+
+    .duy-hair-slide-inner {
+        position: relative;
+        max-width: 1470px;
+        min-height: 590px;
+        margin: auto;
+        padding: 58px 94px 66px;
+        display: grid;
+        grid-template-columns: 39% 33% 28%;
+        align-items: center;
+        gap: 0
+    }
+
+    .duy-hair-copy {
+        position: relative;
+        z-index: 2;
+        max-width: 525px;
+        padding-right: 14px
+    }
+
+    .duy-hair-eyebrow {
+        color: #ee9b58;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        display: block
+    }
+
+    .duy-hair-copy h2 {
+        color: white;
+        font-size: clamp(30px,3.3vw,52px);
+        line-height: 1.14;
+        margin: 0 0 18px
+    }
+
+        .duy-hair-copy h2 span {
+            color: #ec9855
+        }
+
+    .duy-hair-shape {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid #e89b59;
+        border-radius: 11px;
+        padding: 9px 16px;
+        color: #fff;
+        font-size: 19px;
+        font-weight: 800;
+        margin-bottom: 14px;
+        background: #34261d
+    }
+
+        .duy-hair-shape::before {
+            color: #f2a15c;
+            margin-right: 12px
+        }
+
+    .duy-hair-copy p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: #f5ece6;
+        margin: 0 0 12px
+    }
+
+    .duy-hair-rec-label {
+        display: block;
+        color: #ee9b58;
+        font-size: 15px;
+        font-weight: 800;
+        margin-bottom: 9px
+    }
+
+    .duy-hair-recs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        list-style: none;
+        margin: 0 0 19px;
+        padding: 0
+    }
+
+        .duy-hair-recs li {
+            border: 1px solid #815941;
+            background: #34261e;
+            border-radius: 30px;
+            padding: 6px 11px;
+            color: #f5e9dd;
+            font-size: 12px
+        }
+
+            .duy-hair-recs li::before {
+                content: '✓';
+                color: #ff9e52;
+                margin-right: 6px
+            }
+
+    .duy-hair-btn {
+        display: inline-block;
+        background: #ee9650;
+        color: #21150e !important;
+        text-decoration: none;
+        border-radius: 9px;
+        padding: 13px 23px;
+        font-weight: 800;
+        transition: background .2s
+    }
+
+        .duy-hair-btn:hover {
+            background: #ffb77e
+        }
+
+    .duy-hair-hero {
+        height: 495px;
+        align-self: end;
+        position: relative;
+        overflow: hidden;
+        mask-image: linear-gradient(to bottom,#000 78%,transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom,#000 78%,transparent 100%)
+    }
+
+        .duy-hair-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+            display: block;
+            mix-blend-mode: normal;
+            border-radius: 18px 18px 0 0
+        }
+
+        .duy-hair-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,#291e1a 0%,transparent 19%,transparent 80%,#291e1a 100%);
+            pointer-events: none
+        }
+
+    .duy-hair-gallery {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+        height: 410px;
+        padding-left: 10px
+    }
+
+        .duy-hair-gallery img {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            object-fit: cover;
+            border: 3px solid rgba(255,255,255,.9);
+            border-radius: 13px;
+            background: #ddd
+        }
+
+    .duy-hair-arrow {
+        position: absolute;
+        z-index: 4;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border: 1px solid #fff9;
+        border-radius: 50%;
+        background: #15100e99;
+        color: #fff;
+        font-size: 29px;
+        cursor: pointer
+    }
+
+        .duy-hair-arrow:hover {
+            background: #e99553;
+            color: #17110d
+        }
+
+    .duy-hair-prev {
+        left: 19px
+    }
+
+    .duy-hair-next {
+        right: 19px
+    }
+
+    .duy-hair-dots {
+        position: absolute;
+        z-index: 4;
+        left: 50%;
+        bottom: 19px;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 11px
+    }
+
+    .duy-hair-dot {
+        width: 12px;
+        height: 12px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        background: transparent;
+        padding: 0;
+        cursor: pointer
+    }
+
+        .duy-hair-dot.is-active {
+            background: #f2964c;
+            border-color: #f2964c
+        }
+
+    @@media(max-width:1100px) {
+        .duy-hair-slide-inner {
+            padding: 58px 65px 70px;
+            grid-template-columns: 44% 30% 26%
+        }
+
+        .duy-hair-copy h2 {
+            font-size: 35px
+        }
+
+        .duy-hair-gallery {
+            height: 320px
+        }
+
+        .duy-hair-hero {
+            height: 430px
+        }
+    }
+
+    @@media(max-width:760px) {
+        .duy-hair-carousel {
+            min-height: 850px
+        }
+
+        .duy-hair-slide-inner {
+            min-height: 850px;
+            padding: 54px 48px 74px;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 290px;
+            gap: 14px
+        }
+
+        .duy-hair-copy {
+            grid-column: 1/-1;
+            max-width: none
+        }
+
+            .duy-hair-copy h2 {
+                font-size: 32px
+            }
+
+            .duy-hair-copy p {
+                font-size: 14px
+            }
+
+        .duy-hair-hero {
+            height: 290px;
+            align-self: center
+        }
+
+        .duy-hair-gallery {
+            height: 260px;
+            padding-left: 0
+        }
+
+        .duy-hair-arrow {
+            width: 32px;
+            height: 32px;
+            font-size: 22px
+        }
+
+        .duy-hair-prev {
+            left: 5px
+        }
+
+        .duy-hair-next {
+            right: 5px
+        }
+    }
+
+    @@media(max-width:420px) {
+        .duy-hair-carousel, .duy-hair-slide-inner {
+            min-height: 905px
+        }
+
+        .duy-hair-slide-inner {
+            padding: 44px 30px 75px
+        }
+
+        .duy-hair-copy h2 {
+            font-size: 29px
+        }
+
+        .duy-hair-gallery {
+            gap: 5px
+        }
+
+            .duy-hair-gallery img {
+                border-width: 2px
+            }
+    }
+
+    @@media(prefers-reduced-motion:reduce) {
+        .duy-hair-slide {
+            transition: none
+        }
+    }

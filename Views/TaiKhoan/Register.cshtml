@@ -1,0 +1,16 @@
+@model DuyBarberShop.ViewModels.DangKyViewModel
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<div class="account-shell"><div class="account-wrap"><div class="account-panel"><aside class="account-aside"><div class="account-logo">DUY<span style="color:#ffe0d5">BARBER</span></div><div><h2>Chào mừng bạn đến với DuyBarber</h2><p>Đăng ký tài khoản để đặt lịch cắt tóc, chọn dịch vụ và quản lý lịch hẹn của mình.</p></div><small>DUY BARBER SHOP · Phong cách của bạn, sự tận tâm của chúng tôi.</small></aside><section class="account-main"><div class="account-eyebrow">Tài khoản khách hàng</div><h1>Tạo tài khoản</h1><p class="account-lead">Điền thông tin để bắt đầu đặt lịch dễ dàng.</p><form asp-controller="TaiKhoan" asp-action="Register" method="post">@Html.AntiForgeryToken()<div asp-validation-summary="ModelOnly" class="account-error"></div><div class="account-field"><label asp-for="HoTen"></label><input asp-for="HoTen" class="account-input" placeholder="Họ và tên của bạn" /><span asp-validation-for="HoTen" class="account-error"></span></div><div class="account-grid"><div class="account-field"><label asp-for="Email"></label><input asp-for="Email" class="account-input" placeholder="example@email.com" /><span asp-validation-for="Email" class="account-error"></span></div><div class="account-field"><label asp-for="SoDienThoai"></label><input asp-for="SoDienThoai" class="account-input" placeholder="Số điện thoại" /><span asp-validation-for="SoDienThoai" class="account-error"></span></div></div><div class="account-grid"><div class="account-field"><label asp-for="MatKhau"></label><div class="account-password"><input asp-for="MatKhau" class="account-input" placeholder="Nhập mật khẩu" type="password" /><button type="button" class="account-eye" data-target="MatKhau" aria-label="Hiện mật khẩu">Hiện</button></div><span asp-validation-for="MatKhau" class="account-error"></span></div><div class="account-field"><label asp-for="XacNhanMatKhau"></label><div class="account-password"><input asp-for="XacNhanMatKhau" class="account-input" placeholder="Nhập lại mật khẩu" type="password" /><button type="button" class="account-eye" data-target="XacNhanMatKhau" aria-label="Hiện mật khẩu">Hiện</button></div><span asp-validation-for="XacNhanMatKhau" class="account-error"></span></div></div><button class="account-btn account-btn-full" type="submit">Tạo tài khoản</button></form><p class="account-foot">Đã có tài khoản? <a asp-controller="TaiKhoan" asp-action="Login">Đăng nhập</a></p></section></div></div></div>
+<script>
+    document.querySelectorAll('.account-eye').forEach(function(button) { button.addEventListener('click', function() { var input = document.getElementById(button.getAttribute('data-target')); if (!input) return; var shown = input.type === 'text'; input.type = shown ? 'password' : 'text'; button.textContent = shown ? 'Hiện' : 'Ẩn'; button.setAttribute('aria-label', shown ? 'Hiện mật khẩu' : 'Ẩn mật khẩu'); }); });
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/shared/account-forms.css" asp-append-version="true" />
+}

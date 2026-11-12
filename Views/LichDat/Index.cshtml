@@ -1,0 +1,417 @@
+﻿@model IEnumerable<DuyBarberShop.Models.LichDat>
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Lịch sử đặt lịch";
+    var lichDats = Model?.OrderByDescending(x => x.ThoiGianBatDau).ToList() ?? new List<DuyBarberShop.Models.LichDat>();
+    var viVN = CultureInfo.GetCultureInfo("vi-VN");
+}
+
+<style>
+    .db-history {
+        --db-orange: #ef9955;
+        --db-orange-strong: #ff7848;
+        --db-dark: #201b19;
+        --db-border: #eadfd7;
+        color: #292321;
+    }
+
+        .db-history .db-header {
+            background: var(--db-dark);
+            color: #fff;
+            border-radius: 18px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .db-history .db-header::after {
+                content: "";
+                position: absolute;
+                width: 220px;
+                height: 220px;
+                border: 35px solid rgba(239,153,85,.08);
+                border-radius: 50%;
+                right: -65px;
+                top: -100px;
+                pointer-events: none;
+            }
+
+        .db-history .db-eyebrow {
+            color: var(--db-orange);
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            font-size: .76rem;
+            font-weight: 800;
+        }
+
+        .db-history .db-header h1 {
+            font-weight: 800;
+            font-size: clamp(1.55rem, 3vw, 2.25rem);
+        }
+
+        .db-history .db-header p {
+            color: #d8d0cb;
+        }
+
+        .db-history .db-new-btn {
+            background: var(--db-orange-strong);
+            color: #fff;
+            border: 1px solid var(--db-orange-strong);
+            border-radius: 9px;
+            font-weight: 700;
+            padding: 11px 19px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .db-history .db-new-btn:hover {
+                background: #e9683b;
+                color: #fff;
+            }
+
+        .db-history .db-filter-panel {
+            background: #fff;
+            border: 1px solid var(--db-border);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 8px 28px rgba(32,27,25,.045);
+        }
+
+            .db-history .db-filter-panel label {
+                font-size: .85rem;
+                font-weight: 700;
+                color: #514640;
+                margin-bottom: 7px;
+                display: block;
+            }
+
+            .db-history .db-filter-panel .form-control {
+                border-radius: 9px;
+                border-color: #ded3cb;
+                min-height: 45px;
+            }
+
+                .db-history .db-filter-panel .form-control:focus {
+                    border-color: var(--db-orange-strong);
+                    box-shadow: 0 0 0 .2rem rgba(255,120,72,.12);
+                }
+
+        .db-history .db-reset-btn {
+            border: 1px solid #ded3cb;
+            border-radius: 9px;
+            background: #fff;
+            min-height: 45px;
+            padding: 0 17px;
+            font-weight: 650;
+            color: #5d514a;
+        }
+
+            .db-history .db-reset-btn:hover {
+                border-color: var(--db-orange-strong);
+                color: #b95130;
+            }
+
+        .db-history .db-count {
+            font-size: .9rem;
+            color: #756b65;
+        }
+
+        .db-history .db-booking {
+            border: 1px solid var(--db-border);
+            border-radius: 15px;
+            background: #fff;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(32,27,25,.04);
+            margin-bottom: 16px;
+        }
+
+        .db-history .db-booking-head {
+            padding: 18px 22px;
+            background: #fcf9f6;
+            border-bottom: 1px solid #f0e7e0;
+        }
+
+        .db-history .db-booking-id {
+            font-weight: 800;
+            font-size: 1.08rem;
+            margin: 0;
+            color: #28211e;
+        }
+
+        .db-history .db-booking-body {
+            padding: 22px;
+        }
+
+        .db-history .db-meta-label {
+            display: block;
+            font-size: .77rem;
+            text-transform: uppercase;
+            letter-spacing: .055em;
+            font-weight: 750;
+            color: #8a7b72;
+            margin-bottom: 5px;
+        }
+
+        .db-history .db-meta-value {
+            font-size: .97rem;
+            font-weight: 650;
+            overflow-wrap: anywhere;
+        }
+
+        .db-history .db-service-list {
+            color: #4f443f;
+            font-weight: 500;
+        }
+
+        .db-history .db-price {
+            font-size: 1.22rem;
+            color: #d65f32;
+            font-weight: 850;
+        }
+
+        .db-history .db-status {
+            display: inline-block;
+            font-size: .79rem;
+            font-weight: 800;
+            border-radius: 100px;
+            padding: 7px 12px;
+        }
+
+        .db-history .db-status-wait {
+            background: #fff0cc;
+            color: #855a00;
+        }
+
+        .db-history .db-status-confirm {
+            background: #e7efff;
+            color: #2458a8;
+        }
+
+        .db-history .db-status-progress {
+            background: #dff4fa;
+            color: #146779;
+        }
+
+        .db-history .db-status-done {
+            background: #e1f4e8;
+            color: #20733f;
+        }
+
+        .db-history .db-status-cancel {
+            background: #eeeceb;
+            color: #6b625d;
+        }
+
+        .db-history .db-status-other {
+            background: #f4eee8;
+            color: #6a5142;
+        }
+
+        .db-history .db-booking-foot {
+            border-top: 1px solid #f0e7e0;
+            padding-top: 16px;
+            margin-top: 18px;
+        }
+
+        .db-history .db-note {
+            border-left: 3px solid var(--db-orange);
+            background: #fff9f3;
+            padding: 10px 13px;
+            border-radius: 0 8px 8px 0;
+            font-size: .9rem;
+        }
+
+        .db-history .db-empty {
+            background: #fff;
+            border: 1px dashed #d8c8bd;
+            border-radius: 15px;
+            padding: 48px 20px;
+            text-align: center;
+        }
+
+            .db-history .db-empty h3 {
+                font-size: 1.2rem;
+                font-weight: 800;
+            }
+
+    @@media (max-width: 767.98px) {
+        .db-history .db-header {
+            padding: 24px 20px;
+        }
+
+        .db-history .db-booking-head, .db-history .db-booking-body {
+            padding: 17px;
+        }
+    }
+</style>
+
+<section class="db-history container py-4 py-md-5">
+    <header class="db-header mb-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 position-relative" style="z-index:1;">
+            <div>
+                <div class="db-eyebrow mb-2">DUY BARBER SHOP / TÀI KHOẢN</div>
+                <h1 class="mb-2">Lịch sử đặt lịch</h1>
+                <p class="mb-0">Theo dõi lịch hẹn, dịch vụ và trạng thái đặt lịch của bạn.</p>
+            </div>
+            <a asp-controller="LichDat" asp-action="Create" class="db-new-btn align-self-start align-self-md-center">+ Đặt lịch mới</a>
+        </div>
+    </header>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success" role="alert">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">@TempData["Error"]</div>
+    }
+
+    @if (!lichDats.Any())
+    {
+        <div class="db-empty">
+            <h3>Bạn chưa có lịch đặt nào</h3>
+            <p class="text-muted">Hãy đặt lịch để trải nghiệm dịch vụ tại DuyBarberShop.</p>
+            <a asp-controller="LichDat" asp-action="Create" class="db-new-btn">Đặt lịch ngay</a>
+        </div>
+    }
+    else
+    {
+        <div class="db-filter-panel mb-4">
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-md-6">
+                    <label for="dbHistorySearch">Tìm kiếm lịch đặt</label>
+                    <input id="dbHistorySearch" type="search" class="form-control" placeholder="Mã lịch, tên dịch vụ, trạng thái..." autocomplete="off" />
+                </div>
+                <div class="col-12 col-sm-7 col-md-4">
+                    <label for="dbHistoryMonth">Lọc theo tháng</label>
+                    <input id="dbHistoryMonth" type="month" class="form-control" aria-label="Chọn tháng đặt lịch" />
+                </div>
+                <div class="col-12 col-sm-5 col-md-2 d-grid">
+                    <button id="dbHistoryReset" type="button" class="db-reset-btn">Xóa bộ lọc</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h6 fw-bold mb-0">Danh sách lịch đặt</h2>
+            <span id="dbHistoryCount" class="db-count" aria-live="polite">@lichDats.Count lịch đặt</span>
+        </div>
+
+        <div id="dbHistoryList">
+            @foreach (var lich in lichDats)
+            {
+                var chiTiet = lich.ChiTietLichDats?.ToList();
+                var tongTien = chiTiet?.Sum(ct => ct.DonGia) ?? 0;
+                var tongThoiLuong = chiTiet?.Sum(ct => ct.ThoiLuongPhut) ?? 0;
+                var tenDichVu = chiTiet == null ? "" : string.Join(", ", chiTiet.Select(ct => ct.DichVu?.TenDichVu ?? "Dịch vụ"));
+                var trangThaiText = lich.TrangThai switch
+                {
+                    "ChoXacNhan" => "Chờ xác nhận",
+                    "DaXacNhan" => "Đã xác nhận",
+                    "DangThucHien" => "Đang thực hiện",
+                    "DaHoanThanh" => "Đã hoàn thành",
+                    "DaHuy" => "Đã hủy",
+                    _ => lich.TrangThai ?? "Chưa xác định"
+                };
+                var trangThaiClass = lich.TrangThai switch
+                {
+                    "ChoXacNhan" => "db-status-wait",
+                    "DaXacNhan" => "db-status-confirm",
+                    "DangThucHien" => "db-status-progress",
+                    "DaHoanThanh" => "db-status-done",
+                    "DaHuy" => "db-status-cancel",
+                    _ => "db-status-other"
+                };
+
+                <article class="db-booking db-history-item"
+                         data-month="@lich.ThoiGianBatDau.ToString("yyyy-MM")"
+                         data-search="@($"{lich.MaLichDat} lịch đặt {lich.MaLichDat} {tenDichVu} {trangThaiText} {lich.TrangThai} {lich.GhiChu} {lich.ThoiGianBatDau:dd/MM/yyyy}")">
+                    <div class="db-booking-head d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <h3 class="db-booking-id">Lịch đặt #@lich.MaLichDat</h3>
+                        <span class="db-status @trangThaiClass">@trangThaiText</span>
+                    </div>
+                    <div class="db-booking-body">
+                        <div class="row g-4">
+                            <div class="col-12 col-md-6">
+                                <span class="db-meta-label">Thời gian hẹn</span>
+                                <div class="db-meta-value">@lich.ThoiGianBatDau.ToString("dd/MM/yyyy")</div>
+                                <div class="db-service-list">@lich.ThoiGianBatDau.ToString("HH:mm") – @lich.ThoiGianKetThuc.ToString("HH:mm")</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <span class="db-meta-label">Dịch vụ đã chọn</span>
+                                <div class="db-meta-value db-service-list">@tenDichVu</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <span class="db-meta-label">Tổng thời lượng</span>
+                                <div class="db-meta-value">@tongThoiLuong phút</div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <span class="db-meta-label">Tổng tiền</span>
+                                <div class="db-price">@tongTien.ToString("N0", viVN)đ</div>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(lich.GhiChu))
+                        {
+                            <div class="db-note mt-3"><strong>Ghi chú:</strong> @lich.GhiChu</div>
+                        }
+                        @if (lich.TrangThai == "ChoXacNhan")
+                        {
+                            <div class="db-booking-foot">
+                                <form asp-controller="LichDat" asp-action="Cancel" asp-route-id="@lich.MaLichDat" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-danger fw-semibold" onclick="return confirm('Bạn có chắc chắn muốn hủy lịch đặt này?');">Hủy lịch</button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </article>
+            }
+        </div>
+
+        <div id="dbHistoryNoResults" class="db-empty" hidden>
+            <h3>Không tìm thấy lịch đặt phù hợp</h3>
+            <p class="text-muted mb-0">Hãy thử từ khóa khác hoặc xóa bộ lọc tháng.</p>
+        </div>
+    }
+</section>
+
+<script>
+    (() => {
+        const searchInput = document.getElementById('dbHistorySearch');
+        const monthInput = document.getElementById('dbHistoryMonth');
+        const resetButton = document.getElementById('dbHistoryReset');
+        const countLabel = document.getElementById('dbHistoryCount');
+        const emptyMessage = document.getElementById('dbHistoryNoResults');
+        if (!searchInput || !monthInput || !resetButton) return;
+
+        const cards = Array.from(document.querySelectorAll('.db-history-item'));
+        const normalize = value => (value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase().trim();
+        function applyFilters() {
+            const keyword = normalize(searchInput.value);
+            const month = monthInput.value;
+            let visibleCount = 0;
+            cards.forEach(card => {
+                const matchesKeyword = !keyword || normalize(card.dataset.search).includes(keyword);
+                const matchesMonth = !month || card.dataset.month === month;
+                const visible = matchesKeyword && matchesMonth;
+                card.hidden = !visible;
+                if (visible) visibleCount++;
+            });
+            countLabel.textContent = `${visibleCount} / ${cards.length} lịch đặt`;
+            emptyMessage.hidden = visibleCount !== 0;
+        }
+        searchInput.addEventListener('input', applyFilters);
+        monthInput.addEventListener('change', applyFilters);
+        resetButton.addEventListener('click', () => {
+            searchInput.value = '';
+            monthInput.value = '';
+            applyFilters();
+            searchInput.focus();
+        });
+        applyFilters();
+    })();
+</script>

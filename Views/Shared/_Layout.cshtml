@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DuyBarberShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DuyBarberShop.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/redesign.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/views/Shared/_Layout.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header class="site-header">
+        <nav class="navbar navbar-expand-xxl navbar-light">
+            <div class="container">
+                <a class="navbar-brand barber-logo"
+                   asp-controller="TrangChu"
+                   asp-action="Index"
+                   aria-label="DuyBarber - Trang chủ">
+                    <span class="logo-duy">DUY</span><span class="logo-barber">BARBER</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Mở menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav mx-auto align-items-xxl-center site-nav-list">
+                        <li class="nav-item"><a class="nav-link" asp-controller="TrangChu" asp-action="Index">TRANG CHỦ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="TrangChu" asp-action="Index" asp-fragment="ve-chung-toi">VỀ CHÚNG TÔI</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="DichVu" asp-action="Index">DỊCH VỤ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="TrangChu" asp-action="Index" asp-fragment="ca-nhan-hoa">CÁ NHÂN HÓA KIỂU TÓC</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="TrangChu" asp-action="Index" asp-fragment="lien-he">LIÊN HỆ</a></li>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            @if (User.IsInRole("KhachHang"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="LichDat" asp-action="Index">LỊCH CỦA TÔI</a></li>
+                            }
+                            @if (User.IsInRole("NhanVien"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="LichLamViec" asp-action="Index">CÔNG VIỆC CỦA TÔI</a></li>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="ThongKe" asp-action="Index">QUẢN LÝ</a></li>
+                            }
+                        }
+                    </ul>
+                    
+                    <div class="navbar-actions d-flex align-items-center gap-3">
+
+                        <!-- Biểu tượng tài khoản -->
+                        <div class="dropdown">
+                            <button class="profile-icon-btn dropdown-toggle"
+                                    type="button"
+                                    id="profileDropdown"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    aria-label="Menu tài khoản">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     width="24" height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="1.8"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <circle cx="12" cy="8" r="4"></circle>
+                                    <path d="M4 21v-2a8 8 0 0 1 16 0v2"></path>
+                                </svg>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-end profile-dropdown"
+                                aria-labelledby="profileDropdown">
+
+                                @if (User.Identity?.IsAuthenticated == true)
+                                {
+                                    <li>
+                                        <span class="dropdown-header">
+                                            Xin chào, @User.Identity.Name
+                                        </span>
+                                    </li>
+
+                                    <li><hr class="dropdown-divider" /></li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="HoSo"
+                                           asp-action="Index"
+                                           data-account-modal="profile">
+                                            Hồ sơ cá nhân
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <form asp-controller="TaiKhoan"
+                                              asp-action="Logout"
+                                              method="post">
+                                            @Html.AntiForgeryToken()
+
+                                            <button type="submit"
+                                                    class="dropdown-item text-danger">
+                                                Đăng xuất
+                                            </button>
+                                        </form>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="TaiKhoan"
+                                           asp-action="Login"
+                                           data-account-modal="login">
+                                            Đăng nhập
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item"
+                                           asp-controller="TaiKhoan"
+                                           asp-action="Register"
+                                           data-account-modal="register">
+                                            Đăng ký
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <!-- Nút đặt lịch -->
+                        <a asp-controller="LichDat"
+                           asp-action="Create"
+                           class="btn site-book">
+                            ĐẶT LỊCH
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="site-main flex-grow-1">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+
+    <!-- Popup tài khoản dùng biểu mẫu hiện có -->
+    <div class="modal fade" id="accountPopup" tabindex="-1" aria-labelledby="accountPopupTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable account-popup-dialog">
+            <div class="modal-content account-popup-content">
+                <div class="account-popup-heading">
+                    <strong id="accountPopupTitle">Tài khoản DuyBarber</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body account-popup-body">
+                    <iframe id="accountPopupFrame" title="Biểu mẫu tài khoản" loading="eager"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer class="site-footer">
+        <div class="container">&copy; 2026 DuyBarberShop - Website quản lý đặt lịch cắt tóc (MSSV: 21DH112369)</div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/money-format.js" asp-append-version="true"></script>
+
+    <script>
+        (function() {
+            const popupEl = document.getElementById('accountPopup');
+            const frame = document.getElementById('accountPopupFrame');
+            const popup = bootstrap.Modal.getOrCreateInstance(popupEl);
+            const title = document.getElementById('accountPopupTitle');
+            const urls = {
+                login: '@Url.Action("Login", "TaiKhoan")',
+                register: '@Url.Action("Register", "TaiKhoan")',
+                profile: '@Url.Action("Index", "HoSo")',
+                password: '@Url.Action("ChangePassword", "HoSo")'
+            };
+            let frameResizeObserver = null;
+            function resizeFrame() {
+                try {
+                    const doc = frame.contentDocument;
+                    if (!doc || !doc.querySelector('.account-main')) return;
+                    const main = doc.querySelector('.account-main');
+                    const rect = main.getBoundingClientRect();
+                    const contentHeight = Math.ceil(rect.bottom - Math.min(0, rect.top));
+                    const maxHeight = Math.max(180, window.innerHeight - 110);
+                    frame.style.height = Math.min(Math.max(contentHeight, 180), maxHeight) + 'px';
+                    doc.documentElement.style.overflowY = contentHeight > maxHeight ? 'auto' : 'hidden';
+                    doc.body.style.overflowY = contentHeight > maxHeight ? 'auto' : 'hidden';
+                } catch (e) { /* Trang bên ngoài nguồn gốc: bỏ qua */ }
+            }
+            window.addEventListener('resize', resizeFrame);
+            function kindFromPath(path) {
+                const p = path.toLowerCase().replace(/\/+$/, '');
+                if (p.endsWith('/taikhoan/login')) return 'login';
+                if (p.endsWith('/taikhoan/register')) return 'register';
+                if (p.endsWith('/hoso/changepassword')) return 'password';
+                if (p.endsWith('/hoso')) return 'profile';
+                return null;
+            }
+            function show(kind) {
+                if (!urls[kind]) return;
+                title.textContent = ({ login: 'Đăng nhập', register: 'Đăng ký', profile: 'Hồ sơ cá nhân', password: 'Đổi mật khẩu' })[kind];
+                if (frameResizeObserver) { frameResizeObserver.disconnect(); frameResizeObserver = null; }
+                frame.style.height = '420px';
+                frame.src = urls[kind];
+                popup.show();
+            }
+            document.addEventListener('click', function(event) {
+                const link = event.target.closest('a');
+                if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+                const explicit = link.dataset.accountModal;
+                if (explicit) { event.preventDefault(); show(explicit); return; }
+            });
+            frame.addEventListener('load', function() {
+                let doc, url;
+                try { doc = frame.contentDocument; url = new URL(frame.contentWindow.location.href); }
+                catch (e) { return; }
+                const kind = kindFromPath(url.pathname);
+                // Đăng nhập thành công chuyển về trang chủ; tải lại trang cha để cập nhật menu và quyền.
+                if (!kind) {
+                    if (doc.querySelector('.site-header') && !doc.querySelector('.account-shell')) {
+                        window.location.href = url.href;
+                    }
+                    return;
+                }
+                title.textContent = ({ login: 'Đăng nhập', register: 'Đăng ký', profile: 'Hồ sơ cá nhân', password: 'Đổi mật khẩu' })[kind];
+                const style = doc.createElement('style');
+                style.textContent = `
+                        html,body{margin:0!important;min-height:0!important;background:#fff!important}
+                        .site-header,.site-footer{display:none!important}
+                        .site-main{padding:0!important;margin:0!important;min-height:0!important}
+                        .site-main>.container{max-width:none!important;width:100%!important;padding:0!important;margin:0!important}
+                        .account-shell{min-height:0!important;padding:0!important;background:#fff!important}
+                        .account-wrap{max-width:none!important}
+                        .account-panel{display:block!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+                        .account-aside{display:none!important}
+                        .account-main{padding:24px 30px 34px!important}
+                        @@media(max-width:575px){.account-main{padding:20px 16px 28px!important}.account-grid{grid-template-columns:1fr!important}}
+                    `;
+                doc.head.appendChild(style);
+                // Tự co chiều cao theo nội dung biểu mẫu; theo dõi cả lỗi validation xuất hiện sau submit.
+                if (frameResizeObserver) frameResizeObserver.disconnect();
+                frameResizeObserver = new ResizeObserver(resizeFrame);
+                const main = doc.querySelector('.account-main');
+                if (main) frameResizeObserver.observe(main);
+                resizeFrame();
+                // Điều hướng giữa 4 form ngay trong popup.
+                doc.addEventListener('click', function(event) {
+                    const a = event.target.closest('a[href]');
+                    if (!a) return;
+                    const dest = new URL(a.href, url.href);
+                    if (dest.origin !== location.origin) return;
+                    const next = kindFromPath(dest.pathname);
+                    if (next) { event.preventDefault(); show(next); }
+                });
+                // Nếu đổi thông tin thành công, giữ thông báo thành công trong popup.
+            });
+            popupEl.addEventListener('hidden.bs.modal', function() { if (frameResizeObserver) { frameResizeObserver.disconnect(); frameResizeObserver = null; } frame.src = 'about:blank'; });
+        })();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,316 @@
+/* View: QuanLyLichDat/Index.cshtml */
+
+/* Chỉ thay đổi phần trình bày, không ảnh hưởng form hoặc xử lý đặt lịch */
+    .qlld-page {
+        font-family: Arial,Helvetica,sans-serif;
+        color: #26313a;
+        padding: 24px;
+        min-height: 80vh;
+        box-sizing: border-box;
+    }
+
+        .qlld-page * {
+            box-sizing: border-box;
+        }
+
+    .qlld-heading {
+        margin-bottom: 22px;
+    }
+
+        .qlld-heading h2 {
+            font-family: Arial,Helvetica,sans-serif;
+            font-size: 29px;
+            font-weight: 750;
+            margin: 0 0 7px;
+            color: #26313a;
+        }
+
+        .qlld-heading p {
+            color: #78838c !important;
+            font-size: 14px;
+            margin: 0;
+        }
+
+    .qlld-panel {
+        background: #fff;
+        border: 1px solid #e9edef;
+        border-radius: 14px;
+        box-shadow: 0 5px 24px rgba(22,33,42,.04);
+        overflow: hidden;
+    }
+
+    .qlld-panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 24px;
+        border-bottom: 1px solid #edf0f2;
+    }
+
+    .qlld-panel-title {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: #26313a;
+    }
+
+    .qlld-panel-count {
+        color: #87919b;
+        font-size: 13px;
+        margin: 6px 0 0;
+    }
+
+    .qlld-filters {
+        display: grid;
+        grid-template-columns: minmax(190px, 1.5fr) repeat(2, minmax(140px, 1fr)) repeat(2, minmax(145px, 1fr)) auto;
+        gap: 12px;
+        padding: 18px 20px;
+        border-bottom: 1px solid #edf0f2;
+        align-items: end;
+    }
+
+    .qlld-filter-field {
+        min-width: 0;
+    }
+
+        .qlld-filter-field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #65727d;
+            margin-bottom: 7px;
+        }
+
+        .qlld-filter-field input, .qlld-filter-field select {
+            display: block;
+            width: 100%;
+            min-width: 0;
+            height: 38px;
+            padding: 8px 10px;
+            border: 1px solid #dce2e5;
+            border-radius: 8px;
+            background: #fff;
+            color: #26313a;
+            font: inherit;
+            font-size: 12px;
+        }
+
+            .qlld-filter-field input:focus, .qlld-filter-field select:focus {
+                outline: none;
+                border-color: #e9a06c;
+                box-shadow: 0 0 0 3px rgba(233,160,108,.15);
+            }
+
+    #qlld-reset {
+        height: 38px;
+        padding: 0 12px;
+        border: 1px solid #dce2e5;
+        border-radius: 8px;
+        background: #fff;
+        color: #34434e;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+        #qlld-reset:hover {
+            background: #f5f7f8;
+        }
+
+    @@media (max-width: 1350px) {
+        .qlld-filters {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 760px) {
+        .qlld-filters {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .qlld-search-field {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .qlld-filters {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .qlld-search-field {
+            grid-column: auto;
+        }
+    }
+
+    .qlld-table-scroll {
+        overflow-x: auto;
+    }
+
+    .qlld-table {
+        width: 100%;
+        min-width: 1120px;
+        border-collapse: collapse;
+        font-size: 14px;
+    }
+
+        .qlld-table thead th {
+            background: #f8f9fa;
+            color: #77828b;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 15px 18px;
+            white-space: nowrap;
+        }
+
+        .qlld-table tbody td {
+            padding: 16px 18px;
+            border-top: 1px solid #eef0f2;
+            vertical-align: middle;
+        }
+
+        .qlld-table tbody tr:hover {
+            background: #fffaf6;
+        }
+
+    .qlld-name {
+        font-weight: 700;
+        color: #27333c;
+    }
+
+    .qlld-code {
+        font-weight: 700;
+        color: #27333c;
+    }
+
+    .qlld-table .text-muted.small {
+        font-size: 12px;
+        color: #9aa3aa !important;
+        margin-top: 5px;
+    }
+
+    .qlld-money {
+        color: #bc7137;
+        font-weight: 750;
+        white-space: nowrap;
+    }
+
+    .qlld-status {
+        display: inline-block;
+        border-radius: 20px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .qlld-pending {
+        background: #fff0db;
+        color: #895419;
+    }
+
+    .qlld-confirmed {
+        background: #eaf1ff;
+        color: #315fba;
+    }
+
+    .qlld-progress {
+        background: #e5f6fa;
+        color: #18768d;
+    }
+
+    .qlld-completed {
+        background: #e8f7ef;
+        color: #17804b;
+    }
+
+    .qlld-cancelled {
+        background: #f2f3f5;
+        color: #717b84;
+    }
+
+    .qlld-table .form-select {
+        border: 1px solid #dce2e5;
+        border-radius: 8px;
+        min-width: 150px;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .qlld-btn-primary {
+        display: inline-block;
+        background: #d99457;
+        color: #191b1d;
+        border: 0;
+        border-radius: 7px;
+        padding: 9px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+        .qlld-btn-primary:hover, .qlld-btn-primary:focus {
+            background: #edaa71;
+            color: #191b1d;
+        }
+
+    /* Đồng bộ màu nút Xác nhận phân công với nút Thêm nhân viên */
+    .qlld-btn-assign {
+        background: #FF6845;
+        color: #FFFFFF;
+        transition: background-color 0.2s ease;
+    }
+
+        .qlld-btn-assign:hover,
+        .qlld-btn-assign:focus {
+            background: #E95735;
+            color: #FFFFFF;
+        }
+
+    /* Nút Hoàn thành - đồng bộ với nút Thêm nhân viên và Xác nhận */
+    .qlld-btn-complete {
+        background: #FF6845;
+        color: #FFFFFF;
+        transition: background-color 0.2s ease;
+    }
+
+        .qlld-btn-complete:hover,
+        .qlld-btn-complete:focus {
+            background: #E95735;
+            color: #FFFFFF;
+        }
+
+    .qlld-page .alert {
+        border-radius: 9px;
+    }
+    
+    /* Nút Bắt đầu - màu cam sáng */
+    button[type="submit"].btn-start {
+        background-color: #FF7043 !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background-color 0.2s ease;
+    }
+
+        button[type="submit"].btn-start:hover {
+            background-color: #FF5722 !important;
+        }
+
+    @@media(max-width:650px) {
+        .qlld-page {
+            padding: 14px;
+        }
+
+        .qlld-heading h2 {
+            font-size: 24px;
+        }
+
+        .qlld-panel-head {
+            padding: 18px;
+        }
+    }

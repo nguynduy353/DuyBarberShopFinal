@@ -1,0 +1,518 @@
+﻿@model IEnumerable<DuyBarberShop.Models.LichDat>
+@using System.Globalization
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Lịch làm việc của tôi";
+    var lichs = Model?.OrderByDescending(x => x.ThoiGianBatDau).ToList() ?? new List<DuyBarberShop.Models.LichDat>();
+    var soCho = lichs.Count(x => x.TrangThai == "ChoXacNhan");
+    var soDang = lichs.Count(x => x.TrangThai == "DangThucHien");
+    var soHoanThanh = lichs.Count(x => x.TrangThai == "DaHoanThanh");
+}
+
+<style>
+    .work-page {
+        --work-orange: #f6a45f;
+        --work-dark: #1d1917;
+        --work-muted: #77716c;
+        background: #f7f6f4;
+        min-height: 75vh;
+        padding: 42px 0 72px;
+    }
+
+    .work-page .work-shell {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 18px;
+        }
+
+    .work-page .work-hero {
+            background: linear-gradient(120deg,#211a17,#3a2921);
+            color: white;
+            border-radius: 20px;
+            padding: 30px 34px;
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+    .work-page .work-hero:after {
+                content: "";
+                position: absolute;
+                width: 230px;
+                height: 230px;
+                border: 48px solid rgba(246,164,95,.08);
+                border-radius: 50%;
+                right: -55px;
+                top: -115px;
+                pointer-events: none;
+            }
+
+    .work-page .work-eyebrow {
+            color: var(--work-orange);
+            text-transform: uppercase;
+            font-size: .73rem;
+            letter-spacing: .17em;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+    .work-page .work-hero h1 {
+            font-size: clamp(1.65rem,3vw,2.25rem);
+            font-weight: 800;
+            margin: 0 0 8px;
+        }
+
+    .work-page .work-hero p {
+            color: #ddd2c9;
+            margin: 0;
+        }
+
+    .work-page .work-stats {
+            display: grid;
+            grid-template-columns: repeat(4,minmax(0,1fr));
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+    .work-page .work-stat {
+            background: #fff;
+            border: 1px solid #eee8e3;
+            border-radius: 14px;
+            padding: 18px 20px;
+        }
+
+    .work-page .work-stat span {
+                display: block;
+                color: var(--work-muted);
+                font-size: .82rem;
+                margin-bottom: 5px;
+            }
+
+    .work-page .work-stat strong {
+                display: block;
+                color: #29211d;
+                font-size: 1.65rem;
+                line-height: 1.2;
+            }
+
+    .work-page .work-filters {
+            display: grid;
+            grid-template-columns: minmax(0,1fr) 180px 190px auto;
+            gap: 12px;
+            align-items: end;
+            background: white;
+            border: 1px solid #eee8e3;
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+    .work-page .work-field label {
+            display: block;
+            font-weight: 700;
+            color: #4a4039;
+            font-size: .8rem;
+            margin-bottom: 7px;
+        }
+
+    .work-page .work-control {
+            display: block;
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 12px;
+            background: #fff;
+            color: #2c2622;
+            border: 1px solid #ded8d3;
+            border-radius: 9px;
+            outline: none;
+        }
+
+    .work-page .work-control:focus {
+                border-color: #e79b5c;
+                box-shadow: 0 0 0 3px rgba(246,164,95,.17);
+            }
+
+    .work-page .work-reset {
+            min-height: 44px;
+            padding: 10px 15px;
+            border: 1px solid #e4d8cf;
+            background: #fff8f2;
+            color: #8b4e26;
+            border-radius: 9px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+    .work-page .work-reset:hover {
+                background: #ffeddd;
+            }
+
+    .work-page .work-results {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 0 2px 14px;
+            color: #6c625c;
+            font-size: .87rem;
+        }
+
+    .work-page .work-card {
+            background: #fff;
+            border: 1px solid #eae4df;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 18px rgba(37,25,16,.035);
+        }
+
+    .work-page .work-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 18px 22px;
+            background: #fffcf9;
+            border-bottom: 1px solid #f0eae5;
+        }
+
+    .work-page .work-card-id {
+            color: #2d241f;
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+
+    .work-page .work-card-date {
+            font-size: .83rem;
+            color: #8c7667;
+            margin-top: 4px;
+        }
+
+    .work-page .work-badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 100px;
+            padding: 7px 12px;
+            font-weight: 800;
+            font-size: .75rem;
+        }
+
+    .work-page .work-badge.wait {
+                background: #fff2d9;
+                color: #996111;
+            }
+
+    .work-page .work-badge.confirm {
+                background: #e9f0ff;
+                color: #2c5bb5;
+            }
+
+    .work-page .work-badge.progress {
+                background: #e1f7fa;
+                color: #126b7b;
+            }
+
+    .work-page .work-badge.done {
+                background: #e6f7ec;
+                color: #277748;
+            }
+
+    .work-page .work-badge.cancel {
+                background: #f0efef;
+                color: #666;
+            }
+
+    .work-page .work-card-body {
+            padding: 22px;
+        }
+
+    .work-page .work-details {
+            display: grid;
+            grid-template-columns: repeat(2,minmax(0,1fr));
+            gap: 18px 28px;
+        }
+
+    .work-page .work-detail-label {
+            color: #81766f;
+            font-size: .78rem;
+            margin-bottom: 5px;
+        }
+
+    .work-page .work-detail-value {
+            color: #2c2622;
+            font-size: .94rem;
+            font-weight: 650;
+            overflow-wrap: anywhere;
+        }
+
+    .work-page .work-services {
+            margin-top: 18px;
+            padding-top: 17px;
+            border-top: 1px dashed #e8e1dc;
+        }
+
+    .work-page .work-service-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 9px;
+        }
+
+    .work-page .work-service {
+            background: #f8f4ef;
+            border: 1px solid #eee3d8;
+            color: #5b4335;
+            border-radius: 7px;
+            padding: 7px 10px;
+            font-size: .83rem;
+        }
+
+    .work-page .work-card-bottom {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            background: #fcfaf8;
+            padding: 15px 22px;
+            border-top: 1px solid #f0eae5;
+        }
+
+    .work-page .work-total {
+            font-size: 1.18rem;
+            font-weight: 850;
+            color: #d97932;
+        }
+
+    .work-page .work-note {
+            margin-top: 16px;
+            background: #fff9ed;
+            padding: 12px 14px;
+            border-left: 3px solid #e9a15f;
+            border-radius: 6px;
+            color: #5c5149;
+            font-size: .86rem;
+            overflow-wrap: anywhere;
+        }
+
+    .work-page .work-empty {
+            padding: 55px 20px;
+            background: #fff;
+            border: 1px dashed #ded4cc;
+            border-radius: 16px;
+            text-align: center;
+            color: #6e635d;
+        }
+
+    .work-page .work-empty strong {
+                display: block;
+                color: #342b26;
+                margin-bottom: 8px;
+                font-size: 1.05rem;
+            }
+    @@media(max-width:850px) {
+        .work-page .work-filters {
+            grid-template-columns: repeat(2,minmax(0,1fr));
+        }
+
+        .work-page .work-stats {
+            grid-template-columns: repeat(2,minmax(0,1fr));
+        }
+    }
+    @@media(max-width:560px) {
+        .work-page {
+            padding: 24px 0 50px;
+        }
+
+            .work-page .work-hero {
+                padding: 25px 22px;
+            }
+
+            .work-page .work-filters {
+                grid-template-columns: 1fr;
+            }
+
+            .work-page .work-details {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .work-page .work-card-top, .work-page .work-card-body, .work-page .work-card-bottom {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+    }
+</style>
+
+<section class="work-page">
+    <div class="work-shell">
+        <header class="work-hero">
+            <div class="work-eyebrow">DUY BARBER SHOP · NHÂN VIÊN</div>
+            <h1>Lịch làm việc của tôi</h1>
+            <p>Theo dõi các lịch cắt tóc được phân công, thông tin khách hàng và dịch vụ.</p>
+        </header>
+
+        <div class="work-stats" aria-label="Thống kê lịch làm việc">
+            <div class="work-stat"><span>Tổng lịch được phân công</span><strong>@lichs.Count</strong></div>
+            <div class="work-stat"><span>Chờ xác nhận</span><strong>@soCho</strong></div>
+            <div class="work-stat"><span>Đang thực hiện</span><strong>@soDang</strong></div>
+            <div class="work-stat"><span>Đã hoàn thành</span><strong>@soHoanThanh</strong></div>
+        </div>
+
+        <div class="work-filters" role="search" aria-label="Lọc lịch làm việc">
+            <div class="work-field">
+                <label for="workSearch">Tìm kiếm lịch làm việc</label>
+                <input id="workSearch" class="work-control" type="search" placeholder="Mã lịch, khách hàng, SĐT, dịch vụ..." autocomplete="off" />
+            </div>
+            <div class="work-field">
+                <label for="workMonth">Tháng làm việc</label>
+                <input id="workMonth" class="work-control" type="month" />
+            </div>
+            <div class="work-field">
+                <label for="workStatus">Trạng thái</label>
+                <select id="workStatus" class="work-control">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="ChoXacNhan">Chờ xác nhận</option>
+                    <option value="DaXacNhan">Đã xác nhận</option>
+                    <option value="DangThucHien">Đang thực hiện</option>
+                    <option value="DaHoanThanh">Đã hoàn thành</option>
+                    <option value="DaHuy">Đã hủy</option>
+                </select>
+            </div>
+            <button id="workReset" class="work-reset" type="button">Xóa bộ lọc</button>
+        </div>
+
+        <div class="work-results" aria-live="polite">
+            <span id="workResultCount">Hiển thị @lichs.Count lịch làm việc</span>
+            <span>Sắp xếp: mới nhất trước</span>
+        </div>
+
+        @if (lichs.Count == 0)
+        {
+            <div class="work-empty"><strong>Chưa có lịch làm việc</strong>Bạn chưa được phân công lịch cắt tóc nào.</div>
+        }
+        else
+        {
+            <div id="workList">
+                @foreach (var lich in lichs)
+                {
+                    var chiTiet = lich.ChiTietLichDats?.ToList();
+                    var tongTien = chiTiet?.Sum(ct => ct.DonGia) ?? 0;
+                    var tongThoiLuong = chiTiet?.Sum(ct => ct.ThoiLuongPhut) ?? 0;
+                    var trangThai = lich.TrangThai ?? "";
+                    var tenTrangThai = trangThai switch
+                    {
+                        "ChoXacNhan" => "Chờ xác nhận",
+                        "DaXacNhan" => "Đã xác nhận",
+                        "DangThucHien" => "Đang thực hiện",
+                        "DaHoanThanh" => "Đã hoàn thành",
+                        "DaHuy" => "Đã hủy",
+                        _ => trangThai
+                    };
+                    var lopTrangThai = trangThai switch
+                    {
+                        "ChoXacNhan" => "wait",
+                        "DaXacNhan" => "confirm",
+                        "DangThucHien" => "progress",
+                        "DaHoanThanh" => "done",
+                        _ => "cancel"
+                    };
+                    var tenKhach = lich.KhachHang?.HoTen ?? "Chưa có thông tin";
+                    var soDienThoai = lich.KhachHang?.SoDienThoai ?? "Chưa có thông tin";
+                    var tenDichVu = chiTiet == null ? "" : string.Join(" ", chiTiet.Select(ct => ct.DichVu?.TenDichVu ?? ""));
+                    var timKiem = $"{lich.MaLichDat} {tenKhach} {soDienThoai} {tenDichVu} {tenTrangThai} {lich.GhiChu} {lich.ThoiGianBatDau:dd/MM/yyyy}";
+                    <article class="work-card" data-work-card data-month="@lich.ThoiGianBatDau.ToString("yyyy-MM")" data-status="@trangThai" data-search="@timKiem">
+                        <div class="work-card-top">
+                            <div>
+                                <div class="work-card-id">Lịch đặt #@lich.MaLichDat</div>
+                                <div class="work-card-date">@lich.ThoiGianBatDau.ToString("dddd, dd/MM/yyyy", new CultureInfo("vi-VN"))</div>
+                            </div>
+                            <span class="work-badge @lopTrangThai">@tenTrangThai</span>
+                        </div>
+                        <div class="work-card-body">
+                            <div class="work-details">
+                                <div><div class="work-detail-label">Khách hàng</div><div class="work-detail-value">@tenKhach</div></div>
+                                <div><div class="work-detail-label">Số điện thoại</div><div class="work-detail-value">@soDienThoai</div></div>
+                                <div><div class="work-detail-label">Thời gian làm việc</div><div class="work-detail-value">@lich.ThoiGianBatDau.ToString("dd/MM/yyyy HH:mm") – @lich.ThoiGianKetThuc.ToString("HH:mm")</div></div>
+                                <div><div class="work-detail-label">Tổng thời lượng</div><div class="work-detail-value">@tongThoiLuong phút</div></div>
+                            </div>
+                            <div class="work-services">
+                                <div class="work-detail-label">Dịch vụ được đặt</div>
+                                <div class="work-service-list">
+                                    @if (chiTiet != null && chiTiet.Count > 0)
+                                    {
+                                        @foreach (var ct in chiTiet)
+                                        {
+                                            <span class="work-service">@(ct.DichVu?.TenDichVu ?? "Dịch vụ")</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="work-service">Chưa có thông tin dịch vụ</span>
+                                    }
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(lich.GhiChu))
+                            {
+                                <div class="work-note"><strong>Ghi chú:</strong> @lich.GhiChu</div>
+                            }
+                        </div>
+                        <div class="work-card-bottom">
+                            <span class="work-detail-label">Tổng tiền dịch vụ</span>
+                            <span class="work-total">@tongTien.ToString("N0")đ</span>
+                        </div>
+                    </article>
+                }
+            </div>
+            <div id="workNoResults" class="work-empty" hidden>
+                <strong>Không tìm thấy lịch làm việc phù hợp</strong>
+                Hãy thử từ khóa, tháng hoặc trạng thái khác.
+            </div>
+        }
+    </div>
+</section>
+
+<script>
+    (function() {
+        const search = document.getElementById('workSearch');
+        const month = document.getElementById('workMonth');
+        const status = document.getElementById('workStatus');
+        const reset = document.getElementById('workReset');
+        const count = document.getElementById('workResultCount');
+        const empty = document.getElementById('workNoResults');
+        const cards = Array.from(document.querySelectorAll('[data-work-card]'));
+        if (!search || !month || !status || !reset || !count) return;
+
+        function normalize(value) {
+            return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase().trim();
+        }
+        function applyFilters() {
+            const q = normalize(search.value);
+            const selectedMonth = month.value;
+            const selectedStatus = status.value;
+            let visible = 0;
+            cards.forEach(card => {
+                const matches = (!q || normalize(card.dataset.search).includes(q)) &&
+                    (!selectedMonth || card.dataset.month === selectedMonth) &&
+                    (!selectedStatus || card.dataset.status === selectedStatus);
+                card.hidden = !matches;
+                if (matches) visible++;
+            });
+            count.textContent = `Hiển thị ${visible} / ${cards.length} lịch làm việc`;
+            if (empty) empty.hidden = visible !== 0;
+        }
+        search.addEventListener('input', applyFilters);
+        month.addEventListener('change', applyFilters);
+        status.addEventListener('change', applyFilters);
+        reset.addEventListener('click', function() {
+            search.value = '';
+            month.value = '';
+            status.value = '';
+            applyFilters();
+            search.focus();
+        });
+        applyFilters();
+    })();
+</script>

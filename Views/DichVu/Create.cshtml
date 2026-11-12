@@ -1,0 +1,185 @@
+@model DuyBarberShop.Models.DichVu
+
+@{
+    ViewData["Title"] = "Thêm dịch vụ";
+    Layout = "_AdminLayout";
+}
+
+
+
+
+
+<div class="service-create-page">
+
+
+    <h1 class="service-create-title">Thêm dịch vụ mới</h1>
+
+    <p class="service-create-subtitle">
+        Tạo dịch vụ mới và thiết lập thông tin cho DuyBarberShop.
+    </p>
+
+    <div class="service-create-card">
+
+        <div class="service-create-card-header">
+            <h3>Thông tin dịch vụ</h3>
+            <p>Điền đầy đủ thông tin vào biểu mẫu bên dưới.</p>
+        </div>
+
+        <div class="service-create-card-body">
+
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-4"></div>
+
+                <div class="mb-4">
+                    <label asp-for="TenDichVu" class="form-label">
+                        Tên dịch vụ
+                    </label>
+
+                    <input asp-for="TenDichVu"
+                           class="form-control"
+                           placeholder="Ví dụ: Cắt tóc nam" />
+
+                    <span asp-validation-for="TenDichVu"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="MoTa" class="form-label">
+                        Mô tả dịch vụ
+                    </label>
+
+                    <textarea asp-for="MoTa"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Nhập mô tả chi tiết về dịch vụ..."></textarea>
+
+                    <span asp-validation-for="MoTa"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="row g-3 mb-4">
+
+                    <div class="col-md-6">
+                        <label asp-for="GiaDichVu" class="form-label">
+                            Giá dịch vụ (VNĐ)
+                        </label>
+
+                        <input type="text"
+                               class="form-control vnd-input"
+                               data-target="GiaDichVu"
+                               inputmode="numeric"
+                               autocomplete="off"
+                               placeholder="Ví dụ: 70.000" />
+
+                        <input asp-for="GiaDichVu"
+                               type="hidden"
+                               id="GiaDichVu" />
+
+                        <div class="form-text">
+                            Nhập giá dịch vụ bằng VNĐ.
+                        </div>
+
+                        <span asp-validation-for="GiaDichVu"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="ThoiLuongPhut" class="form-label">
+                            Thời lượng (phút)
+                        </label>
+
+                        <input asp-for="ThoiLuongPhut"
+                               type="number"
+                               min="1"
+                               class="form-control" />
+
+                        <div class="form-text">
+                            Thời gian dự kiến thực hiện dịch vụ.
+                        </div>
+
+                        <span asp-validation-for="ThoiLuongPhut"
+                              class="text-danger small"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="service-image-upload">
+                    <label for="anhDichVu">Hình ảnh đại diện dịch vụ</label>
+                    <input type="file" id="anhDichVu" name="anhDichVu" accept="image/jpeg,image/png,image/webp" />
+                    <img id="anhDichVuPreview" class="service-image-preview" alt="Xem trước hình ảnh dịch vụ" />
+                    <div class="image-help">Chọn ảnh JPG, PNG hoặc WebP, tối đa 5 MB. Có thể bỏ trống.</div>
+                    @Html.ValidationMessage("anhDichVu", new { @class = "text-danger small" })
+                </div>
+                <div class="service-create-status">
+                    <div class="form-check">
+                        <input asp-for="TrangThai"
+                               class="form-check-input" />
+
+                        <label asp-for="TrangThai"
+                               class="form-check-label fw-semibold">
+                            Đang hoạt động
+                        </label>
+                    </div>
+
+                    <div class="form-text ms-4">
+                        Dịch vụ đang hoạt động có thể hiển thị
+                        trong danh sách dành cho khách hàng.
+                    </div>
+                </div>
+
+                <div class="service-create-actions">
+
+                    <a asp-action="Index"
+                       class="service-create-btn service-create-btn-back">
+                        Hủy / Quay lại
+                    </a>
+
+                    <button type="submit"
+                            class="service-create-btn service-create-btn-save">
+                        + Thêm dịch vụ
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function() {
+            const input = document.getElementById('anhDichVu');
+            const preview = document.getElementById('anhDichVuPreview');
+            if (!input || !preview) return;
+            let objectUrl = null;
+            input.addEventListener('change', function() {
+                if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = null; }
+                const file = input.files && input.files[0];
+                if (!file) { preview.src = preview.dataset.original || ''; preview.classList.toggle('has-image', !!preview.dataset.original); return; }
+                if (file.size > 5 * 1024 * 1024 || !['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+                    alert('Vui lòng chọn ảnh JPG, PNG hoặc WebP không quá 5 MB.');
+                    input.value = '';
+                    preview.src = preview.dataset.original || '';
+                    preview.classList.toggle('has-image', !!preview.dataset.original);
+                    return;
+                }
+                objectUrl = URL.createObjectURL(file);
+                preview.src = objectUrl;
+                preview.classList.add('has-image');
+            });
+        })();
+    </script>
+
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/DichVu/Create.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/views/shared/service-image-upload.css" asp-append-version="true" />
+}

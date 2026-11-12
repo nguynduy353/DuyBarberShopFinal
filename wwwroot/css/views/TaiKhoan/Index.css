@@ -1,0 +1,310 @@
+/* View: TaiKhoan/Index.cshtml */
+
+.tk-page {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        color: #172b42;
+    }
+
+        .tk-page * {
+            box-sizing: border-box;
+        }
+
+    .tk-heading {
+        margin-bottom: 24px;
+    }
+
+        .tk-heading h1 {
+            font-size: 26px;
+            font-weight: 750;
+            margin: 0 0 5px;
+        }
+
+        .tk-heading p {
+            font-size: 13px;
+            color: #8290a3;
+            margin: 0;
+        }
+
+    .tk-panel {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(20,35,55,.035);
+    }
+
+    .tk-panel-head {
+        padding: 24px 28px 22px;
+        border-bottom: 1px solid #edf0f3;
+    }
+
+        .tk-panel-head h2 {
+            margin: 0 0 3px;
+            font-size: 17px;
+            font-weight: 750;
+        }
+
+        .tk-panel-head p {
+            margin: 0;
+            color: #8894a4;
+            font-size: 12px;
+        }
+
+    .tk-filters {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .tk-search {
+        flex: 1 1 360px;
+        min-width: 180px;
+    }
+
+    .tk-input, .tk-select {
+        height: 42px;
+        border: 1px solid #dfe6ed;
+        background: #fff;
+        border-radius: 6px;
+        color: #26384e;
+        padding: 0 11px;
+        font: inherit;
+        font-size: 13px;
+        outline: none;
+    }
+
+    .tk-input {
+        width: 100%;
+    }
+
+    .tk-select {
+        min-width: 165px;
+    }
+
+        .tk-input:focus, .tk-select:focus {
+            border-color: #f47b50;
+            box-shadow: 0 0 0 2px rgba(244,123,80,.12);
+        }
+
+    .tk-button {
+        height: 42px;
+        border: 0;
+        border-radius: 6px;
+        padding: 0 15px;
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 650;
+        white-space: nowrap;
+    }
+
+    .tk-button-search {
+        background: #ff7043;
+        color: white;
+    }
+
+        .tk-button-search:hover {
+            background: #ef6137;
+        }
+
+    .tk-button-reset {
+        background: #fff;
+        color: #40516a;
+        border: 1px solid #dfe6ed;
+    }
+
+    .tk-table-wrap {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .tk-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        table-layout: auto;
+    }
+
+        .tk-table th {
+            text-align: left;
+            background: #f7f8fa;
+            color: #708099;
+            font-size: 11px;
+            font-weight: 750;
+            text-transform: uppercase;
+            letter-spacing: .035em;
+            padding: 18px 20px;
+            white-space: nowrap;
+            border-bottom: 1px solid #dce2e9;
+        }
+
+        .tk-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #edf0f3;
+            vertical-align: middle;
+        }
+
+        .tk-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tk-table tbody tr:hover {
+            background: #fcfcfd;
+        }
+
+    .tk-person {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        min-width: 175px;
+    }
+
+    .tk-avatar {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        background: #fff0e9;
+        color: #ed6c3f;
+        font-size: 12px;
+        font-weight: 800;
+        border-radius: 8px;
+    }
+
+    .tk-person-name {
+        font-weight: 700;
+        color: #16283d;
+    }
+
+    .tk-email {
+        color: #465b73;
+    }
+
+    .tk-muted {
+        color: #8290a2;
+    }
+
+    .tk-pill {
+        display: inline-block;
+        border-radius: 100px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .tk-role-admin {
+        color: #ac4d25;
+        background: #fff0e6;
+    }
+
+    .tk-role-staff {
+        color: #315fbb;
+        background: #eaf1ff;
+    }
+
+    .tk-role-customer {
+        color: #63718a;
+        background: #f0f2f6;
+    }
+
+    .tk-status-active {
+        color: #148450;
+        background: #e7f7ed;
+    }
+
+    .tk-status-locked {
+        color: #7c8795;
+        background: #f0f2f4;
+    }
+
+    .tk-action {
+        padding: 9px 14px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        border: 1px solid transparent;
+    }
+
+    .tk-action-lock {
+        color: #c44242;
+        background: #fff0f0;
+        border-color: #ffe0e0;
+    }
+
+    .tk-action-unlock {
+        color: #12834b;
+        background: #e9f8ef;
+        border-color: #d1f0de;
+    }
+
+    .tk-current {
+        color: #8a95a5;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .tk-notice {
+        padding: 12px 15px;
+        border-radius: 7px;
+        margin-bottom: 14px;
+        font-size: 13px;
+    }
+
+    .tk-notice-success {
+        background: #e9f8ef;
+        color: #137444;
+    }
+
+    .tk-notice-error {
+        background: #fff0f0;
+        color: #b43d3d;
+    }
+
+    .tk-empty {
+        text-align: center;
+        padding: 28px 12px !important;
+        color: #8793a3;
+    }
+
+    /* Giữ bảng rộng, chỉ cuộn ngang khi màn hình không đủ chỗ. */
+    @@media (max-width: 1200px) {
+        .tk-table {
+            min-width: 1050px;
+        }
+    }
+
+    @@media (max-width: 800px) {
+        .tk-panel-head {
+            padding: 20px 16px;
+        }
+
+        .tk-table th, .tk-table td {
+            padding: 14px 16px;
+        }
+
+        .tk-heading h1 {
+            font-size: 21px;
+        }
+
+        .tk-filters {
+            align-items: stretch;
+        }
+
+        .tk-search {
+            flex-basis: 100%;
+        }
+
+        .tk-select {
+            flex: 1 1 140px;
+        }
+
+        .tk-table {
+            min-width: 1050px;
+        }
+    }

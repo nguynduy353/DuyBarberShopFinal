@@ -1,0 +1,150 @@
+@model IEnumerable<DuyBarberShop.Models.DichVu>
+@{
+    ViewData["Title"] = "Danh sách dịch vụ";
+    var isAdmin = User.IsInRole("Admin");
+    if (isAdmin) { Layout = "_AdminLayout"; }
+}
+
+@if (isAdmin)
+{
+    
+
+    <section class="ad-services">
+        <div class="ad-top">
+            <div>
+                <h1 class="ad-heading">Quản lý dịch vụ</h1>
+                <p class="ad-description">Quản lý thông tin, giá và trạng thái các dịch vụ của DuyBarberShop.</p>
+            </div>
+            <a asp-controller="DichVu" asp-action="Create" class="ad-add">+ Thêm dịch vụ</a>
+        </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="ad-alert ad-alert-success">@TempData["Success"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="ad-alert ad-alert-error">@TempData["Error"]</div>
+        }
+
+        <div class="ad-panel">
+            <div class="ad-panel-head">
+                <div>
+                    <h2 class="ad-panel-title">Danh sách dịch vụ</h2>
+                    <div class="ad-count">Tổng cộng @Model.Count() dịch vụ</div>
+                </div>
+                <form asp-controller="DichVu" asp-action="Index" method="get" class="ad-search">
+                    <input type="search" name="search" value="@ViewBag.Search" placeholder="Tìm kiếm tên dịch vụ..." aria-label="Tìm kiếm dịch vụ" />
+                    <button type="submit">Tìm kiếm</button>
+                </form>
+            </div>
+            <div class="ad-table-scroll">
+                <table class="ad-table">
+                    <thead>
+                        <tr>
+                            <th>Dịch vụ</th>
+                            <th>Giá</th>
+                            <th>Thời lượng</th>
+                            <th>Mô tả</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var dichVu in Model)
+                        {
+                            var ten = (dichVu.TenDichVu ?? "").ToLowerInvariant();
+                            var anhMacDinh = "/images/services/cat-toc-nam.jpg";
+                            if (ten.Contains("gội") || ten.Contains("goi")) anhMacDinh = "/images/services/goi-dau.jpg";
+                            else if (ten.Contains("tạo kiểu") || ten.Contains("tao kieu")) anhMacDinh = "/images/services/tao-kieu.jpg";
+                            var anh = !string.IsNullOrWhiteSpace(dichVu.HinhAnh) ? Url.Content(dichVu.HinhAnh) : anhMacDinh;
+                            <tr>
+                                <td>
+                                    <div class="ad-service-name">
+                                        <img class="ad-service-image" src="@anh" alt="@dichVu.TenDichVu" />
+                                        <div><div class="ad-name">@dichVu.TenDichVu</div><div class="ad-id">Mã #@dichVu.MaDichVu</div></div>
+                                    </div>
+                                </td>
+                                <td class="ad-money">
+                                    @dichVu.GiaDichVu.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))đ
+                                </td>
+                                <td>@dichVu.ThoiLuongPhut phút</td>
+                                <td class="ad-desc">@dichVu.MoTa</td>
+                                <td>
+                                    @if (dichVu.TrangThai)
+                                    {
+                                        <span class="ad-status ad-active">Đang hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="ad-status ad-inactive">Ngừng hoạt động</span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="ad-actions">
+                                        <a class="ad-action ad-view" asp-controller="DichVu" asp-action="Details" asp-route-id="@dichVu.MaDichVu">Xem</a>
+                                        <a class="ad-action ad-edit" asp-controller="DichVu" asp-action="Edit" asp-route-id="@dichVu.MaDichVu">Sửa</a>
+                                        <a class="ad-action ad-delete" asp-controller="DichVu" asp-action="Delete" asp-route-id="@dichVu.MaDichVu">Xóa</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        @if (!Model.Any())
+                        {
+                            <tr><td colspan="6" class="ad-empty">Không tìm thấy dịch vụ nào.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    
+    <section class="dv-page">
+        <div class="dv-container">
+            <div class="dv-heading">
+                <h1 class="dv-title">DỊCH VỤ CỦA CHÚNG TÔI</h1>
+                <p class="dv-subtitle">Lựa chọn dịch vụ phù hợp với phong cách của bạn.</p>
+            </div>
+            <form asp-controller="DichVu" asp-action="Index" method="get" class="dv-search">
+                <div class="dv-search-group">
+                    <input type="text" name="search" value="@ViewBag.Search" class="dv-search-input" placeholder="Tìm kiếm dịch vụ..." />
+                    <button type="submit" class="dv-search-button">TÌM KIẾM</button>
+                </div>
+            </form>
+            <div class="dv-grid">
+                @foreach (var dichVu in Model)
+                {
+                    var ten = (dichVu.TenDichVu ?? "").ToLowerInvariant();
+                    var anhMacDinh = "/images/services/cat-toc-nam.jpg";
+                    if (ten.Contains("gội") || ten.Contains("goi")) anhMacDinh = "/images/services/goi-dau.jpg";
+                    else if (ten.Contains("tạo kiểu") || ten.Contains("tao kieu")) anhMacDinh = "/images/services/tao-kieu.jpg";
+                    var anh = !string.IsNullOrWhiteSpace(dichVu.HinhAnh) ? Url.Content(dichVu.HinhAnh) : anhMacDinh;
+                    <article class="dv-card">
+                        <div class="dv-image-wrap"><img src="@anh" alt="@dichVu.TenDichVu" class="dv-image" loading="lazy" /></div>
+                        <div class="dv-card-body">
+                            <h2 class="dv-card-title">@dichVu.TenDichVu</h2>
+                            <p class="dv-duration">@dichVu.ThoiLuongPhut phút</p>
+                            <p class="dv-price">
+                                @dichVu.GiaDichVu.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))đ
+                            </p>
+                            <div class="dv-card-actions">
+                                <a asp-controller="DichVu" asp-action="Details" asp-route-id="@dichVu.MaDichVu" class="dv-detail-link">Xem dịch vụ →</a>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+            @if (!Model.Any())
+            {
+                <div class="dv-empty">Không tìm thấy dịch vụ nào.</div>
+            }
+        </div>
+    </section>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/DichVu/Index.css" asp-append-version="true" />
+}

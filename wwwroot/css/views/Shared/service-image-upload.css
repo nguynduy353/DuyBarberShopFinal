@@ -1,0 +1,42 @@
+/* Dùng chung DichVu/Create.cshtml, DichVu/Edit.cshtml */
+.service-image-upload {
+        border: 1px dashed #cbd5e1;
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 22px;
+    }
+
+        .service-image-upload label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .service-image-upload input[type=file] {
+            display: block;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .service-image-upload .image-help {
+            color: #788697;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+    .service-image-preview {
+        display: none;
+        max-width: 300px;
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 9px;
+        margin: 12px 0;
+        border: 1px solid #e2e8f0;
+    }
+
+        .service-image-preview.has-image {
+            display: block;
+        }

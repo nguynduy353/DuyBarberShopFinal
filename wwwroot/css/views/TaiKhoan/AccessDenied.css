@@ -1,0 +1,91 @@
+/* View: TaiKhoan/AccessDenied.cshtml */
+
+.db-access-page {
+        min-height: calc(100vh - 90px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 64px 20px;
+        background: #FAF8FE;
+        font-family: inherit;
+    }
+
+    .db-access-card {
+        width: 100%;
+        max-width: 540px;
+        padding: 48px 44px;
+        border-radius: 18px;
+        background: #fff;
+        border: 1px solid #e9e9ef;
+        box-shadow: 0 16px 45px rgba(15, 28, 43, .08);
+        text-align: center;
+    }
+
+    .db-access-symbol {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #fff0e9;
+        color: #ff6545;
+    }
+
+    .db-access-code {
+        margin: 0 0 6px;
+        color: #ff6545;
+        font-size: clamp(52px, 10vw, 76px);
+        font-weight: 900;
+        line-height: 1.1;
+        letter-spacing: -2px;
+    }
+
+    .db-access-title {
+        margin: 0 0 12px;
+        color: #142336;
+        font-size: clamp(23px, 5vw, 29px);
+        font-weight: 800;
+        line-height: 1.35;
+    }
+
+    .db-access-description {
+        max-width: 385px;
+        margin: 0 auto 28px;
+        color: #6b788a;
+        font-size: 15px;
+        line-height: 1.75;
+    }
+
+    .db-access-home {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        min-height: 46px;
+        padding: 11px 26px;
+        border-radius: 9px;
+        background: #ff6545;
+        color: #fff !important;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none !important;
+        transition: background .2s ease, transform .2s ease;
+    }
+
+        .db-access-home:hover,
+        .db-access-home:focus-visible {
+            background: #e95436;
+            transform: translateY(-2px);
+        }
+
+    @@media (max-width: 575px) {
+        .db-access-page {
+            padding: 32px 16px;
+        }
+
+        .db-access-card {
+            padding: 36px 22px;
+        }
+    }

@@ -1,0 +1,48 @@
+@model DuyBarberShop.Models.DichVu
+
+@{
+    ViewData["Title"] = "Chi tiết dịch vụ";
+    bool laAdmin = User.IsInRole("Admin");
+    string giaVnd = Model.GiaDichVu.ToString("N0", new System.Globalization.CultureInfo("vi-VN")) + "đ";
+}
+
+
+
+<div class="service-detail-page @(laAdmin ? "admin" : "customer")">
+    <div class="service-detail-top">
+        <div>
+            <h1 class="service-detail-heading">Chi tiết dịch vụ</h1>
+            <p class="service-detail-subheading">Thông tin chi tiết về dịch vụ tại Duy Barber Shop</p>
+        </div>
+        <a asp-controller="DichVu" asp-action="Index" class="service-detail-back">← Quay lại danh sách</a>
+    </div>
+
+    <div class="service-detail-card">
+        <div class="service-detail-accent"></div>
+        <div class="service-detail-body">
+            <h2 class="service-detail-name">@Model.TenDichVu</h2>
+            <p class="service-detail-description">@(string.IsNullOrWhiteSpace(Model.MoTa) ? "Chưa có mô tả cho dịch vụ này." : Model.MoTa)</p>
+
+            <div class="service-detail-separator"></div>
+
+            <div class="service-detail-grid">
+                <div class="service-detail-info">
+                    <div class="service-detail-label">Thời lượng thực hiện</div>
+                    <div class="service-detail-value">@Model.ThoiLuongPhut phút</div>
+                </div>
+                <div class="service-detail-info">
+                    <div class="service-detail-label">Giá dịch vụ</div>
+                    <div class="service-detail-value service-detail-price">@giaVnd</div>
+                </div>
+            </div>
+
+            <div class="service-detail-actions">
+                <a asp-controller="DichVu" asp-action="Index" class="service-detail-primary">Xem tất cả dịch vụ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/DichVu/Details.css" asp-append-version="true" />
+}

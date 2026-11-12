@@ -1,0 +1,57 @@
+﻿@model DuyBarberShop.Models.DichVu
+
+@{
+    ViewData["Title"] = "Xóa dịch vụ";
+}
+
+<div class="container py-5">
+    <div class="card border-0 shadow-sm mx-auto"
+         style="max-width: 650px; border-radius: 12px;">
+
+        <div class="card-body p-4 p-md-5">
+            <h2 class="fw-bold text-danger mb-3">
+                Xác nhận xóa dịch vụ
+            </h2>
+
+            <p class="text-muted">
+                Bạn có chắc chắn muốn xóa dịch vụ sau không?
+            </p>
+
+            <div class="border rounded p-3 mb-4">
+                <h4 class="fw-bold">@Model.TenDichVu</h4>
+
+                <p class="text-muted mb-2">
+                    @Model.MoTa
+                </p>
+
+                <p class="mb-2">
+                    <strong>Thời lượng:</strong>
+                    @Model.ThoiLuongPhut phút
+                </p>
+
+                <p class="mb-0">
+                    <strong>Giá dịch vụ:</strong>
+                    <span style="color: #ff6845; font-weight: bold;">
+                        @Model.GiaDichVu.ToString("N0")đ
+                    </span>
+                </p>
+            </div>
+
+            <form asp-action="Delete"
+                  asp-route-id="@Model.MaDichVu"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <button type="submit" class="btn btn-danger">
+                    Xác nhận xóa
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary ms-2">
+                    Hủy
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

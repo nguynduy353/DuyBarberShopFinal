@@ -1,0 +1,188 @@
+﻿@model DuyBarberShop.ViewModels.DatLichViewModel
+@using DuyBarberShop.Models
+
+@{
+    ViewData["Title"] = "Đặt lịch cắt tóc";
+
+    var dichVus = ViewBag.DichVus as List<DichVu>
+        ?? new List<DichVu>();
+}
+
+<div class="container py-5">
+    <div class="card border-0 shadow-sm mx-auto"
+         style="max-width: 800px; border-radius: 12px;">
+
+        <div class="card-body p-4 p-md-5">
+            <h2 class="fw-bold mb-2">Đặt lịch cắt tóc</h2>
+
+            <p class="text-muted mb-4">
+                Chọn dịch vụ và thời gian phù hợp với bạn.
+            </p>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Success"]
+                </div>
+            }
+
+            <form asp-controller="LichDat"
+                  asp-action="Create"
+                  method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <h5 class="fw-bold mb-3">1. Chọn dịch vụ</h5>
+
+                <div class="mb-4">
+                    @foreach (var dv in dichVus)
+                    {
+                        <div class="form-check border rounded p-3 mb-2"
+                             style="padding-left: 2.5rem !important;">
+
+                            <input class="form-check-input dich-vu-checkbox"
+                                   type="checkbox"
+                                   name="DanhSachMaDichVu"
+                                   value="@dv.MaDichVu"
+                                   id="dichvu-@dv.MaDichVu"
+                                   data-gia="@dv.GiaDichVu.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                                   data-thoiluong="@dv.ThoiLuongPhut"
+                                   checked="@(Model.DanhSachMaDichVu.Contains(dv.MaDichVu))" />
+
+                            <label class="form-check-label w-100"
+                                   for="dichvu-@dv.MaDichVu">
+
+                                <span class="fw-semibold">
+                                    @dv.TenDichVu
+                                </span>
+
+                                <span class="d-block text-muted small">
+                                    @dv.ThoiLuongPhut phút
+                                    -
+                                    @dv.GiaDichVu.ToString("N0", new System.Globalization.CultureInfo("vi-VN"))đ
+                                </span>
+                            </label>
+                        </div>
+                    }
+
+                    <span asp-validation-for="DanhSachMaDichVu"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="rounded p-3 mb-4"
+                     style="background-color: #fff3ed;">
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tổng thời lượng:</span>
+                        <strong id="tongThoiLuong">0 phút</strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <span>Tổng tiền:</span>
+                        <strong id="tongTien"
+                                style="color: #ff6845;">
+                            0đ
+                        </strong>
+                    </div>
+                </div>
+
+                <h5 class="fw-bold mb-3">2. Chọn thời gian</h5>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label asp-for="NgayDat" class="form-label">
+                            Ngày đặt lịch
+                        </label>
+
+                        <input asp-for="NgayDat"
+                               type="date"
+                               class="form-control"
+                               min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+
+                        <span asp-validation-for="NgayDat"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="GioDat" class="form-label">
+                            Giờ bắt đầu
+                        </label>
+
+                        <input asp-for="GioDat"
+                               type="time"
+                               class="form-control" />
+
+                        <span asp-validation-for="GioDat"
+                              class="text-danger"></span>
+                    </div>
+                </div>
+
+                <h5 class="fw-bold mb-3">3. Ghi chú</h5>
+
+                <div class="mb-4">
+                    <textarea asp-for="GhiChu"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Nhập yêu cầu của bạn (nếu có)..."></textarea>
+
+                    <span asp-validation-for="GhiChu"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit"
+                            class="btn text-white"
+                            style="background-color: #ff6845;">
+                        Xác nhận đặt lịch
+                    </button>
+
+                    <a asp-controller="TrangChu"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+                        Hủy
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const checkboxes = document.querySelectorAll(
+                ".dich-vu-checkbox"
+            );
+
+            const tongTienElement = document.getElementById("tongTien");
+            const tongThoiLuongElement = document.getElementById("tongThoiLuong");
+
+            function capNhatTong() {
+                let tongTien = 0;
+                let tongThoiLuong = 0;
+
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        tongTien += Number(checkbox.dataset.gia);
+                        tongThoiLuong += Number(checkbox.dataset.thoiluong);
+                    }
+                });
+
+                tongTienElement.textContent =
+                    new Intl.NumberFormat("vi-VN").format(tongTien) + "đ";
+
+                tongThoiLuongElement.textContent =
+                    tongThoiLuong + " phút";
+            }
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener("change", capNhatTong);
+            });
+
+            capNhatTong();
+        });
+    </script>
+}

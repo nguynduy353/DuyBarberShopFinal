@@ -1,0 +1,176 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var tenTrang = ViewData["Title"]?.ToString() ?? "Quản trị";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@tenTrang - Admin DuyBarberShop</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body class="admin-layout">
+
+    <div class="admin-wrapper">
+
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar" id="adminSidebar">
+
+            <a asp-controller="ThongKe" asp-action="Index"
+               class="admin-brand">
+                <span>DUY</span><strong>BARBER</strong>
+            </a>
+
+            <div class="admin-menu-title">QUẢN TRỊ HỆ THỐNG</div>
+
+            <nav class="admin-nav">
+
+                <a asp-controller="ThongKe" asp-action="Index"
+                   class="admin-nav-link @(controller == "ThongKe" ? "active" : "")">
+                    <span class="admin-nav-icon">▦</span>
+                    Tổng quan
+                </a>
+
+                <a asp-controller="DichVu" asp-action="Index"
+                   class="admin-nav-link @(controller == "DichVu" ? "active" : "")">
+                    <span class="admin-nav-icon">✂</span>
+                    Quản lý dịch vụ
+                </a>
+
+                <a asp-controller="QuanLyLichDat" asp-action="Index"
+                   class="admin-nav-link @(controller == "QuanLyLichDat" ? "active" : "")">
+                    <span class="admin-nav-icon">▤</span>
+                    Quản lý lịch đặt
+                </a>
+
+                <a asp-controller="NhanVien" asp-action="Index"
+                   class="admin-nav-link @(controller == "NhanVien" ? "active" : "")">
+                    <span class="admin-nav-icon">♙</span>
+                    Quản lý nhân viên
+                </a>
+
+                <a asp-controller="TaiKhoan" asp-action="Index"
+                   class="admin-nav-link @(controller == "TaiKhoan" ? "active" : "")">
+                    <span class="admin-nav-icon">♧</span>
+                    Quản lý tài khoản
+                </a>
+
+                <div class="admin-menu-title mt-4">KHÁC</div>
+
+                <a asp-controller="TrangChu" asp-action="Index"
+                   class="admin-nav-link">
+                    <span class="admin-nav-icon">←</span>
+                    Về trang chủ
+                </a>
+
+            </nav>
+
+            <div class="admin-sidebar-footer">
+                © 2026 DuyBarberShop
+            </div>
+        </aside>
+
+        <!-- NỘI DUNG CHÍNH -->
+        <div class="admin-main">
+
+            <!-- TOPBAR -->
+            <header class="admin-topbar">
+
+                <div class="admin-topbar-left">
+                    <button type="button"
+                            class="admin-menu-toggle"
+                            id="adminMenuToggle"
+                            aria-label="Mở hoặc đóng menu"
+                            aria-controls="adminSidebar"
+                            aria-expanded="false">
+                        ☰
+                    </button>
+
+                    <span class="admin-topbar-title">Dashboard</span>
+                </div>
+
+                <div class="dropdown">
+
+                    <button class="admin-profile dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+
+                        <span class="admin-avatar">A</span>
+
+                        <span class="admin-profile-name">
+                            @(User.Identity?.Name ?? "Admin")
+                        </span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="HoSo"
+                               asp-action="Index">
+                                Hồ sơ cá nhân
+                            </a>
+                        </li>
+
+                        <li><hr class="dropdown-divider" /></li>
+
+                        <li>
+                            <form asp-controller="TaiKhoan"
+                                  asp-action="Logout"
+                                  method="post">
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit"
+                                        class="dropdown-item text-danger">
+                                    Đăng xuất
+                                </button>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </header>
+
+            <!-- CONTENT -->
+            <main class="admin-content">
+                @RenderBody()
+            </main>
+
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggle = document.getElementById("adminMenuToggle");
+            const sidebar = document.getElementById("adminSidebar");
+
+            if (toggle && sidebar) {
+                toggle.addEventListener("click", function() {
+                    const opened = sidebar.classList.toggle("admin-sidebar-open");
+                    toggle.setAttribute("aria-expanded", opened.toString());
+                });
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/money-format.js" asp-append-version="true"></script>
+</body>
+</html>

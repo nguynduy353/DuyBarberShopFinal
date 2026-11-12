@@ -1,0 +1,137 @@
+@model DuyBarberShop.Models.DichVu
+
+@{
+    ViewData["Title"] = "Sửa dịch vụ";
+    Layout = "_AdminLayout";
+}
+
+
+
+
+<div class="container py-5">
+    <div class="card border-0 shadow-sm mx-auto"
+         style="max-width: 700px; border-radius: 12px;">
+
+        <div class="card-body p-4 p-md-5">
+            <h2 class="fw-bold mb-3">Chỉnh sửa dịch vụ</h2>
+            <p class="text-muted mb-4">
+                Cập nhật thông tin dịch vụ của DuyBarberShop.
+            </p>
+
+            <form asp-action="Edit"
+                  asp-route-id="@Model.MaDichVu"
+                  method="post" enctype="multipart/form-data">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="MaDichVu" />
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label class="form-label">Tên dịch vụ</label>
+                    <input asp-for="TenDichVu"
+                           class="form-control" />
+                    <span asp-validation-for="TenDichVu"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Mô tả</label>
+                    <textarea asp-for="MoTa"
+                              class="form-control"
+                              rows="3"></textarea>
+                    <span asp-validation-for="MoTa"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Giá dịch vụ (VNĐ)</label>
+                    <input type="text"
+                           class="form-control vnd-input"
+                           data-target="GiaDichVu"
+                           inputmode="numeric"
+                           autocomplete="off"
+                           value="@Model.GiaDichVu.ToString("0")" />
+                    <input asp-for="GiaDichVu"
+                           type="hidden"
+                           id="GiaDichVu" />
+                    <span asp-validation-for="GiaDichVu"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Thời lượng (phút)</label>
+                    <input asp-for="ThoiLuongPhut"
+                           type="number"
+                           min="1"
+                           class="form-control" />
+                    <span asp-validation-for="ThoiLuongPhut"
+                          class="text-danger"></span>
+                </div>
+
+
+                <div class="service-image-upload">
+                    <label for="anhDichVu">Hình ảnh đại diện dịch vụ</label>
+                    <input type="file" id="anhDichVu" name="anhDichVu" accept="image/jpeg,image/png,image/webp" />
+                    <img id="anhDichVuPreview" class="service-image-preview @(string.IsNullOrWhiteSpace(Model.HinhAnh) ? "" : "has-image")"
+                         src="@(Model.HinhAnh ?? "")" data-original="@(Model.HinhAnh ?? "")" alt="Hình ảnh dịch vụ hiện tại" />
+                    <div class="image-help">Để trống nếu muốn giữ ảnh cũ. JPG, PNG hoặc WebP, tối đa 5 MB.</div>
+                    @Html.ValidationMessage("anhDichVu", new { @class = "text-danger small" })
+                </div>
+                <div class="form-check mb-4">
+                    <input asp-for="TrangThai"
+                           class="form-check-input" />
+                    <label asp-for="TrangThai"
+                           class="form-check-label">
+                        Đang hoạt động
+                    </label>
+                </div>
+
+                <button type="submit"
+                        class="btn text-white"
+                        style="background-color: #ff6845;">
+                    Lưu thay đổi
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary ms-2">
+                    Hủy
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function() {
+            const input = document.getElementById('anhDichVu');
+            const preview = document.getElementById('anhDichVuPreview');
+            if (!input || !preview) return;
+            let objectUrl = null;
+            input.addEventListener('change', function() {
+                if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = null; }
+                const file = input.files && input.files[0];
+                if (!file) { preview.src = preview.dataset.original || ''; preview.classList.toggle('has-image', !!preview.dataset.original); return; }
+                if (file.size > 5 * 1024 * 1024 || !['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+                    alert('Vui lòng chọn ảnh JPG, PNG hoặc WebP không quá 5 MB.');
+                    input.value = '';
+                    preview.src = preview.dataset.original || '';
+                    preview.classList.toggle('has-image', !!preview.dataset.original);
+                    return;
+                }
+                objectUrl = URL.createObjectURL(file);
+                preview.src = objectUrl;
+                preview.classList.add('has-image');
+            });
+        })();
+    </script>
+
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/shared/service-image-upload.css" asp-append-version="true" />
+}

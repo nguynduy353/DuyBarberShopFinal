@@ -1,0 +1,114 @@
+@model IEnumerable<DuyBarberShop.Models.NhanVien>
+@{
+    ViewData["Title"] = "Quản lý nhân viên";
+    Layout = "_AdminLayout";
+}
+
+<div class="nv-page">
+    <div class="nv-heading">
+        <div>
+            <h1>Quản lý nhân viên</h1>
+            <p class="nv-muted">Quản lý thông tin và trạng thái làm việc của nhân viên.</p>
+        </div>
+        <a asp-controller="NhanVien" asp-action="Create" class="nv-btn-primary">+ Thêm nhân viên</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success" role="alert">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">@TempData["Error"]</div>
+    }
+
+    <section class="nv-card">
+        <div class="nv-card-header">
+            <h2>Danh sách nhân viên</h2>
+            <p class="nv-muted">Tổng cộng @Model.Count() nhân viên</p>
+            <form asp-controller="NhanVien" asp-action="Index" method="get" class="nv-filters">
+                <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="Tìm theo tên hoặc email..." aria-label="Tìm theo tên hoặc email" />
+                <select id="nvStatusFilter" class="form-select" aria-label="Lọc trạng thái">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="active">Đang làm việc</option>
+                    <option value="inactive">Ngừng làm việc</option>
+                </select>
+                <button type="submit" class="nv-btn-primary">Tìm kiếm</button>
+                <a asp-controller="NhanVien" asp-action="Index" class="nv-btn-outline">Xóa bộ lọc</a>
+            </form>
+        </div>
+        <div class="table-responsive">
+            <table class="table nv-table">
+                <thead>
+                    <tr>
+                        <th>Mã NV</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var nv in Model)
+                    {
+                        <tr class="nv-data-row" data-status="@(nv.TrangThaiLamViec ? "active" : "inactive")">
+                            <td>#@nv.MaNhanVien</td>
+                            <td><div class="nv-person"><span class="nv-avatar">NV</span><span>@nv.TaiKhoan.HoTen</span></div></td>
+                            <td>@nv.TaiKhoan.Email</td>
+                            <td>@nv.TaiKhoan.SoDienThoai</td>
+                            <td>
+                                @if (nv.TrangThaiLamViec)
+                                {
+                                    <span class="nv-status nv-status-active">Đang làm việc</span>
+                                }
+                                else
+                                {
+
+                                    <span class="nv-status nv-status-inactive">Ngừng làm việc</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="nv-actions">
+                                    <a asp-controller="NhanVien" asp-action="Edit" asp-route-id="@nv.MaNhanVien" class="nv-action">Sửa</a>
+                                    <form asp-controller="NhanVien" asp-action="Delete" asp-route-id="@nv.MaNhanVien" method="post"
+                                          onsubmit="return confirm('Bạn có chắc chắn muốn xóa nhân viên @nv.TaiKhoan.HoTen? Hành động này không thể hoàn tác.');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="nv-action nv-action-delete">Xóa</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr><td colspan="6" class="text-center text-muted py-4">Chưa có nhân viên nào.</td></tr>
+                    }
+                    <tr id="nvNoMatch" style="display:none;"><td colspan="6" class="text-center text-muted py-4">Không có nhân viên phù hợp với trạng thái đã chọn.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('nvStatusFilter');
+            const rows = Array.from(document.querySelectorAll('.nv-data-row'));
+            const empty = document.getElementById('nvNoMatch');
+            select.addEventListener('change', function () {
+                let count = 0;
+                rows.forEach(row => {
+                    const visible = select.value === 'all' || row.dataset.status === select.value;
+                    row.style.display = visible ? '' : 'none';
+                    if (visible) count++;
+                });
+                empty.style.display = rows.length && count === 0 ? '' : 'none';
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/NhanVien/Index.css" asp-append-version="true" />
+}

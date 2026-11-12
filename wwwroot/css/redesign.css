@@ -1,0 +1,156 @@
+﻿
+/* ===== DUYBARBERSHOP - NAVBAR ===== */
+
+/* Thanh điều hướng */
+.navbar {
+    background-color: #1d1815 !important;
+    padding: 18px 0;
+}
+
+/* Logo */
+.navbar-brand {
+    font-family: 'Anton', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* Các mục menu */
+.navbar .navbar-nav .nav-link {
+    font-family: 'Anton', sans-serif !important;
+    font-size: 17px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.5px;
+    line-height: 1.5;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 10px 12px;
+    transition: color 0.2s ease;
+}
+
+    /* Hover */
+    .navbar .navbar-nav .nav-link:hover,
+    .navbar .navbar-nav .nav-link.active {
+        color: #e5a063 !important;
+    }
+
+/* Khoảng cách giữa các mục */
+@media (min-width: 992px) {
+    .navbar .navbar-nav {
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+/* Nút điều hướng trên điện thoại */
+.navbar-toggler {
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+/* Responsive */
+@media (max-width: 991px) {
+    .navbar .navbar-nav .nav-link {
+        font-size: 16px !important;
+        padding: 12px 8px;
+    }
+}
+
+/* ==================================
+   DUYBARBERSHOP - LOGO & PROFILE
+================================== */
+
+/* Logo */
+.site-header .navbar .barber-logo {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Anton', sans-serif !important;
+    font-size: 27px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    white-space: nowrap;
+    opacity: 1 !important;
+}
+
+    .site-header .navbar .barber-logo .logo-duy {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff;
+    }
+
+    .site-header .navbar .barber-logo .logo-barber {
+        color: #f3a25e !important;
+        -webkit-text-fill-color: #f3a25e;
+    }
+
+/* Nút biểu tượng tài khoản */
+.profile-icon-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .profile-icon-btn:hover,
+    .profile-icon-btn:focus {
+        background: #f3a25e;
+        border-color: #f3a25e;
+        color: #1d1815;
+    }
+
+    /* Ẩn mũi tên mặc định */
+    .profile-icon-btn.dropdown-toggle::after {
+        display: none;
+    }
+
+/* Menu xổ xuống */
+.profile-dropdown {
+    min-width: 200px;
+    background: #ffffff;
+    border: 1px solid #e5e0db;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+    .profile-dropdown .dropdown-item {
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 12px 14px;
+        border-radius: 6px;
+        color: #1d1815;
+    }
+
+        .profile-dropdown .dropdown-item:hover {
+            background: #fff0e4;
+            color: #b65c22;
+        }
+
+    .profile-dropdown .dropdown-header {
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-size: 12px;
+        color: #777;
+        white-space: normal;
+    }
+
+/* Giữ nút đặt lịch nằm cạnh icon */
+.navbar-actions {
+    flex-shrink: 0;
+}
+
+    .navbar-actions .site-book {
+        white-space: nowrap;
+    }

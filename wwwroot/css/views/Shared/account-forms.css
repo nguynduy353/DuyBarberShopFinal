@@ -1,0 +1,303 @@
+/* Dùng chung HoSo/ChangePassword.cshtml, HoSo/Index.cshtml, TaiKhoan/Login.cshtml, TaiKhoan/Register.cshtml */
+.account-shell {
+        --accent: #ff6845;
+        --hover: #e95735;
+        --ink: #172638;
+        --muted: #718096;
+        min-height: calc(100vh - 160px);
+        background: linear-gradient(135deg,#fff8f4 0%,#f5f7fa 58%,#fff 100%);
+        padding: 58px 20px 72px;
+        font-family: inherit;
+        color: var(--ink)
+    }
+
+        .account-shell * {
+            box-sizing: border-box
+        }
+
+    .account-wrap {
+        max-width: 1040px;
+        margin: 0 auto
+    }
+
+    .account-panel {
+        display: grid;
+        grid-template-columns: minmax(260px,.85fr) minmax(360px,1.15fr);
+        background: #fff;
+        border: 1px solid #edf0f3;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 16px 52px rgba(27,39,55,.08)
+    }
+
+    .account-aside {
+        padding: 54px 38px;
+        background: linear-gradient(155deg,#ff6845,#ed8057);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 55px
+    }
+
+    .account-logo {
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: -1px
+    }
+
+    .account-aside h2 {
+        font-size: 31px;
+        line-height: 1.25;
+        font-weight: 800;
+        margin: 0 0 14px
+    }
+
+    .account-aside p {
+        line-height: 1.75;
+        color: rgba(255,255,255,.91);
+        margin: 0
+    }
+
+    .account-aside small {
+        color: rgba(255,255,255,.85)
+    }
+
+    .account-main {
+        padding: 44px 46px
+    }
+
+    .account-eyebrow {
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #e65b3c;
+        font-weight: 800;
+        margin-bottom: 8px
+    }
+
+    .account-main h1 {
+        font-size: 27px;
+        font-weight: 800;
+        margin: 0 0 8px
+    }
+
+    .account-lead {
+        color: var(--muted);
+        margin: 0 0 28px;
+        font-size: 14px
+    }
+
+    .account-field {
+        margin-bottom: 18px
+    }
+
+        .account-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+    .account-input {
+        width: 100%;
+        height: 46px;
+        border: 1px solid #dfe5ec;
+        border-radius: 10px;
+        background: #fff;
+        padding: 0 14px;
+        color: var(--ink);
+        outline: none;
+        transition: .2s;
+        font-size: 14px
+    }
+
+        .account-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255,104,69,.12)
+        }
+
+        .account-input[readonly] {
+            background: #f4f6f8;
+            color: #65758a
+        }
+
+    .account-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 16px
+    }
+
+    .account-btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        min-height: 46px;
+        border: 0;
+        border-radius: 10px;
+        background: var(--accent);
+        color: #fff !important;
+        font-size: 14px;
+        font-weight: 750;
+        padding: 0 22px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: .2s
+    }
+
+        .account-btn:hover {
+            background: var(--hover);
+            color: #fff !important
+        }
+
+    .account-btn-outline {
+        background: #fff;
+        border: 1px solid #dce2e8;
+        color: #334155 !important
+    }
+
+        .account-btn-outline:hover {
+            background: #f8fafc;
+            color: #172638 !important
+        }
+
+    .account-btn-full {
+        width: 100%
+    }
+
+    .account-foot {
+        margin: 23px 0 0;
+        text-align: center;
+        font-size: 14px;
+        color: #64748b
+    }
+
+        .account-foot a, .account-link {
+            color: #e85d3d;
+            font-weight: 750;
+            text-decoration: none
+        }
+
+            .account-foot a:hover, .account-link:hover {
+                text-decoration: underline
+            }
+
+    .account-error {
+        display: block;
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px
+    }
+
+    .validation-summary-errors {
+        color: #dc3545;
+        font-size: 13px;
+        background: #fff3f2;
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin-bottom: 16px
+    }
+
+    .validation-summary-valid {
+        display: none
+    }
+
+    .account-check {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 13px;
+        color: #475569;
+        cursor: pointer
+    }
+
+        .account-check input {
+            accent-color: #ff6845;
+            width: 16px;
+            height: 16px
+        }
+
+    .account-password {
+        position: relative
+    }
+
+        .account-password .account-input {
+            padding-right: 68px
+        }
+
+    .account-eye {
+        position: absolute;
+        right: 8px;
+        top: 6px;
+        min-width: 52px;
+        height: 34px;
+        border: 0;
+        background: #f3f5f7;
+        color: #536274;
+        border-radius: 7px;
+        font-size: 12px;
+        cursor: pointer
+    }
+
+        .account-eye:hover {
+            background: #e9edf2
+        }
+
+    .account-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap
+    }
+
+    .account-notice {
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: #e8f7ef;
+        color: #17683a;
+        margin-bottom: 20px;
+        font-size: 13px
+    }
+
+    .account-quiet {
+        font-size: 12px;
+        color: #8995a5;
+        margin-top: 9px
+    }
+    @@media(max - width:760px) {
+        .account-shell {
+            padding: 24px 14px 45px
+        }
+
+        .account-panel {
+            grid-template-columns: 1fr
+        }
+
+        .account-aside {
+            padding: 25px;
+            gap: 14px
+        }
+
+            .account-aside h2 {
+                font-size: 23px
+            }
+
+            .account-aside small {
+                display: none
+            }
+
+        .account-main {
+            padding: 30px 24px
+        }
+
+        .account-grid {
+            grid-template-columns: 1fr
+        }
+    }
+    @@media(max - width:400px)
+
+    {
+        .account-actions > * {
+            width: 100%
+        }
+    }

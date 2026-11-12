@@ -1,0 +1,176 @@
+@model IEnumerable<DuyBarberShop.Models.TaiKhoan>
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+    Layout = "_AdminLayout";
+    var danhSach = Model?.ToList() ?? new List<DuyBarberShop.Models.TaiKhoan>();
+    var maDangNhap = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+}
+
+
+
+<div class="tk-page">
+    <div class="tk-heading">
+        <h1>Quản lý tài khoản</h1>
+        <p>Quản lý thông tin, vai trò và trạng thái tài khoản của DuyBarberShop.</p>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="tk-notice tk-notice-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="tk-notice tk-notice-error">@TempData["Error"]</div>
+    }
+
+    <section class="tk-panel">
+        <div class="tk-panel-head">
+            <h2>Danh sách tài khoản</h2>
+            <p id="tkCount">Tổng cộng @danhSach.Count tài khoản</p>
+
+            <form asp-controller="TaiKhoan" asp-action="Index" method="get" class="tk-filters" id="tkFilterForm">
+                <div class="tk-search">
+                    <input id="tkSearch" name="search" class="tk-input" type="search"
+                           value="@ViewBag.Search" placeholder="Tìm theo họ tên hoặc email..." />
+                </div>
+                <select id="tkStatus" class="tk-select" aria-label="Lọc trạng thái">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="active">Đang hoạt động</option>
+                    <option value="locked">Đã khóa</option>
+                </select>
+                <select id="tkRole" class="tk-select" aria-label="Lọc vai trò">
+                    <option value="all">Tất cả vai trò</option>
+                    <option value="Admin">Admin</option>
+                    <option value="NhanVien">Nhân viên</option>
+                    <option value="KhachHang">Khách hàng</option>
+                </select>
+                <button type="submit" class="tk-button tk-button-search">Tìm kiếm</button>
+                <a asp-controller="TaiKhoan" asp-action="Index" id="tkReset" class="tk-button tk-button-reset" style="display:inline-flex;align-items:center;text-decoration:none">Xóa bộ lọc</a>
+            </form>
+        </div>
+
+        <div class="tk-table-wrap">
+            <table class="tk-table">
+                <thead>
+                    <tr>
+                        <th>Mã TK</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Vai trò</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="tkRows">
+                    @foreach (var tk in danhSach)
+                    {
+                        <tr class="tk-data-row" data-role="@tk.VaiTro" data-status="@(tk.TrangThai ? "active" : "locked")">
+                            <td><strong>#@tk.MaTaiKhoan</strong></td>
+                            <td>
+                                <div class="tk-person">
+                                    <span class="tk-avatar">TK</span>
+                                    <span class="tk-person-name">@tk.HoTen</span>
+                                </div>
+                            </td>
+                            <td class="tk-email">@tk.Email</td>
+                            <td>@(string.IsNullOrWhiteSpace(tk.SoDienThoai) ? "—" : tk.SoDienThoai)</td>
+                            <td>
+                                @if (tk.VaiTro == "Admin")
+                                {
+                                    <span class="tk-pill tk-role-admin">Admin</span>
+                                }
+                                else if (tk.VaiTro == "NhanVien")
+                                {
+                                    <span class="tk-pill tk-role-staff">Nhân viên</span>
+                                }
+                                else
+                                {
+                                    <span class="tk-pill tk-role-customer">Khách hàng</span>
+                                }
+                            </td>
+                            <td>
+                                @if (tk.TrangThai)
+                                {
+                                    <span class="tk-pill tk-status-active">Đang hoạt động</span>
+                                }
+                                else
+                                {
+                                    <span class="tk-pill tk-status-locked">Đã khóa</span>
+                                }
+                            </td>
+                            <td>
+                                @if (tk.MaTaiKhoan.ToString() != maDangNhap)
+                                {
+                                    <form asp-controller="TaiKhoan" asp-action="ToggleStatus"
+                                          asp-route-id="@tk.MaTaiKhoan" method="post">
+                                        @Html.AntiForgeryToken()
+                                        @if (tk.TrangThai)
+                                        {
+                                            <button type="submit" class="tk-action tk-action-lock"
+                                                    onclick="return confirm('Bạn có chắc muốn khóa tài khoản này?');">
+                                                Khóa
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="tk-action tk-action-unlock">Mở khóa</button>
+                                        }
+                                    </form>
+                                }
+                                else
+                                {
+                                    <span class="tk-current">Tài khoản hiện tại</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    <tr id="tkEmpty" style="display:none"><td colspan="7" class="tk-empty">Không tìm thấy tài khoản phù hợp.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const role = document.getElementById('tkRole');
+        const status = document.getElementById('tkStatus');
+        const rows = Array.from(document.querySelectorAll('.tk-data-row'));
+        const empty = document.getElementById('tkEmpty');
+        const count = document.getElementById('tkCount');
+        const search = document.getElementById('tkSearch');
+        const reset = document.getElementById('tkReset');
+
+        function applyFilters() {
+            let visible = 0;
+            rows.forEach(function (row) {
+                const matchRole = role.value === 'all' || row.dataset.role === role.value;
+                const matchStatus = status.value === 'all' || row.dataset.status === status.value;
+                const show = matchRole && matchStatus;
+                row.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            empty.style.display = visible ? 'none' : '';
+            count.textContent = 'Hiển thị ' + visible + ' / ' + rows.length + ' tài khoản';
+        }
+
+        role.addEventListener('change', applyFilters);
+        status.addEventListener('change', applyFilters);
+        reset.addEventListener('click', function (event) {
+            event.preventDefault();
+            role.value = 'all';
+            status.value = 'all';
+            if (search.value.trim()) {
+                window.location.href = reset.href;
+            } else {
+                applyFilters();
+            }
+        });
+        applyFilters();
+    });
+</script>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/TaiKhoan/Index.css" asp-append-version="true" />
+}

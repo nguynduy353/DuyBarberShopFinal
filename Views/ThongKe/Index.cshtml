@@ -1,0 +1,111 @@
+@{
+    ViewData["Title"] = "Thống kê";
+    Layout = "_AdminLayout";
+    var viVN = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    int tongLichDat = ViewBag.TongLichDat;
+    int daHoanThanh = ViewBag.DaHoanThanh;
+    decimal tongDoanhThu = ViewBag.TongDoanhThu;
+    string? thangDaChon = ViewBag.Thang as string;
+    string tenKhoangThoiGian = ViewBag.TenKhoangThoiGian as string ?? "Toàn bộ thời gian";
+    var topDichVu = ViewBag.TopDichVu as Dictionary<string, int>
+        ?? new Dictionary<string, int>();
+    decimal[] doanhThuTheoThang = ViewBag.DoanhThuTheoThang as decimal[] ?? new decimal[12];
+    int namBieuDo = ViewBag.NamBieuDo;
+    decimal maxDoanhThu = doanhThuTheoThang.Length > 0 ? doanhThuTheoThang.Max() : 0;
+    int maxLuotDat = topDichVu.Count > 0 ? topDichVu.Values.Max() : 0;
+}
+
+<div class="tk-page">
+    <div class="tk-heading">
+        <div>
+            <h1>Thống kê &amp; báo cáo</h1>
+            <p>Theo dõi lịch đặt, dịch vụ phổ biến và doanh thu của DuyBarberShop.</p>
+        </div>
+        <span class="tk-tag"><span class="tk-tag-dot"></span> @tenKhoangThoiGian</span>
+    </div>
+
+    <form asp-controller="ThongKe" asp-action="Index" method="get" class="tk-filter">
+        <div class="tk-filter-field">
+            <label for="tk-thang">Lọc theo tháng</label>
+            <input id="tk-thang" type="month" name="thang" value="@thangDaChon" aria-label="Chọn tháng thống kê" />
+        </div>
+        <button type="submit" class="tk-filter-btn">Xem thống kê</button>
+        <a asp-controller="ThongKe" asp-action="Index" class="tk-filter-reset">Toàn bộ thời gian</a>
+        <span class="tk-filter-caption">Theo tháng diễn ra lịch hẹn</span>
+    </form>
+
+    @if (TempData["Error"] != null)
+    {
+        <div role="alert" style="padding:12px 16px;background:#fff1f0;color:#b42318;border-radius:9px;margin-bottom:16px;">@TempData["Error"]</div>
+    }
+
+    <div class="tk-overview">
+        <div class="tk-card">
+            <div class="tk-card-top">
+                <div><p class="tk-label">Tổng lịch đặt</p><p class="tk-number">@tongLichDat.ToString("N0", viVN)</p></div>
+                <div class="tk-icon" style="background:#fff1e9;color:#ef7948;">&#9783;</div>
+            </div>
+            <div class="tk-hint">Số lịch đặt trong khoảng thời gian đã chọn</div>
+        </div>
+        <div class="tk-card">
+            <div class="tk-card-top">
+                <div><p class="tk-label">Lịch đã hoàn thành</p><p class="tk-number">@daHoanThanh.ToString("N0", viVN)</p></div>
+                <div class="tk-icon" style="background:#e9f9ed;color:#16a34a;">&#10003;</div>
+            </div>
+            <div class="tk-hint">Lịch đã phục vụ xong</div>
+        </div>
+        <div class="tk-card tk-money-card">
+            <div class="tk-card-top">
+                <div><p class="tk-label">Tổng doanh thu</p><p class="tk-number">@tongDoanhThu.ToString("N0", viVN)đ</p></div>
+                <div class="tk-icon" style="background:#ffeadc;color:#ed7540;">₫</div>
+            </div>
+            <div class="tk-hint">Chỉ tính các lịch đã hoàn thành</div>
+        </div>
+    </div>
+
+    <div class="tk-section">
+        <section class="tk-card">
+            <h2 class="tk-panel-title">Top 5 dịch vụ được đặt nhiều nhất</h2>
+            <p class="tk-panel-subtitle">@tenKhoangThoiGian · Không tính lịch đã hủy</p>
+            @if (topDichVu.Count == 0)
+            {
+                <div class="tk-empty">Chưa có dữ liệu dịch vụ trong khoảng thời gian này.</div>
+            }
+            else
+            {
+                @foreach (var dichVu in topDichVu)
+                {
+                    var phanTram = maxLuotDat > 0 ? dichVu.Value * 100.0 / maxLuotDat : 0;
+                    <div class="tk-service-row">
+                        <div class="tk-service-meta">
+                            <span class="tk-service-name">@dichVu.Key</span>
+                            <span class="tk-service-count">@dichVu.Value.ToString("N0", viVN) lượt</span>
+                        </div>
+                        <div class="tk-track"><div class="tk-fill" style="width:@(phanTram.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))%"></div></div>
+                    </div>
+                }
+            }
+        </section>
+        <section class="tk-card">
+            <h2 class="tk-panel-title">Doanh thu năm @namBieuDo</h2>
+            <p class="tk-panel-subtitle">Di chuột lên từng cột để xem doanh thu chính xác (VNĐ)</p>
+            <div class="tk-chart" role="img" aria-label="Biểu đồ cột doanh thu theo 12 tháng năm @namBieuDo">
+                @for (int i = 0; i < 12; i++)
+                {
+                    var giaTri = doanhThuTheoThang[i];
+                    double chieuCao = maxDoanhThu > 0 ? (double)(giaTri / maxDoanhThu) * 100 : 0;
+                    <div class="tk-chart-col" title="Tháng @(i + 1): @giaTri.ToString("N0", viVN)đ">
+                        <span class="tk-chart-value">@(giaTri >= 1000000 ? (giaTri / 1000000m).ToString("0.#", viVN) + "tr" : giaTri >= 1000 ? (giaTri / 1000m).ToString("0.#", viVN) + "k" : giaTri.ToString("0", viVN))</span>
+                        <div class="tk-chart-bar-wrap"><div class="tk-chart-bar" style="height:@(chieuCao.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))%"></div></div>
+                        <span class="tk-chart-label">T@(i + 1)</span>
+                    </div>
+                }
+            </div>
+        </section>
+    </div>
+    <p style="font-size:12px;color:#98a2b3;margin-top:16px;">Thống kê dựa trên thời gian bắt đầu lịch hẹn; doanh thu là tổng đơn giá dịch vụ trong các lịch đã hoàn thành.</p>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/ThongKe/Index.css" asp-append-version="true" />
+}

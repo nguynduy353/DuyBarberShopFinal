@@ -1,0 +1,406 @@
+
+.auth-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 36px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 16px 50px rgba(20, 30, 60, .08);
+}
+
+.auth-brand {
+    text-align: center;
+    color: #6255e8;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #7b8190;
+    margin-bottom: 28px;
+}
+
+.auth-label {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e0e3eb;
+    border-radius: 12px;
+}
+
+    .auth-input:focus {
+        outline: none;
+        border-color: #6255e8;
+        box-shadow: 0 0 0 3px rgba(98, 85, 232, .12);
+    }
+
+.auth-button {
+    width: 100%;
+    padding: 13px;
+    border: 0;
+    border-radius: 12px;
+    background: #6255e8;
+    color: white;
+    font-weight: 700;
+    margin-top: 12px;
+}
+
+    .auth-button:hover {
+        background: #5042d0;
+    }
+
+.auth-link {
+    color: #6255e8;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-field {
+    margin-bottom: 18px;
+}
+
+.auth-error {
+    color: #dc3545;
+    font-size: 13px;
+}
+
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 24px;
+    }
+}
+
+
+/* ===== DuyBarberShop: Figma-inspired site and home page ===== */
+:root {
+    --barber-ink: #202b3d;
+    --barber-orange: #ff7047;
+    --barber-cream: #FAF8FE;
+    --barber-mint: #dcece7;
+    --barber-muted: #71839a;
+}
+
+body {
+    margin-bottom: 0;
+    color: var(--barber-ink);
+}
+
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid #f0eee9;
+}
+
+    .site-header .navbar {
+        min-height: 72px;
+    }
+
+    .site-header .barber-logo {
+        font-size: 23px;
+        font-weight: 800;
+        letter-spacing: -.7px;
+        color: var(--barber-ink);
+    }
+
+        .site-header .barber-logo span {
+            color: var(--barber-orange);
+        }
+
+    .site-header .navbar-nav .nav-link {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--barber-ink);
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+        .site-header .navbar-nav .nav-link:hover, .site-header .navbar-nav .nav-link:focus {
+            color: var(--barber-orange);
+        }
+
+.navbar-actions {
+    font-size: 13px;
+}
+
+.site-greeting {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.site-login {
+    color: var(--barber-ink);
+    text-decoration: none;
+}
+
+.site-register, .site-book, .site-logout {
+    display: inline-block;
+    border: 0;
+    border-radius: 30px;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.site-register, .site-book {
+    color: #fff;
+    background: var(--barber-orange);
+}
+
+.site-logout {
+    color: var(--barber-ink);
+    background: #f2f3f4;
+}
+
+.site-register:hover, .site-book:hover {
+    background: #f45d34;
+    color: #fff;
+}
+
+.site-main {
+    background: var(--barber-cream);
+}
+
+.site-footer {
+    background: #fff;
+    border-top: 1px solid #f0eee9;
+    padding: 16px 0;
+    text-align: center;
+    color: #71839a;
+    font-size: 12px;
+}
+
+.home-page {
+    padding: 30px 0 44px;
+}
+
+.home-hero {
+    background: var(--barber-mint);
+    border-radius: 18px;
+    min-height: 310px;
+    padding: 32px 44px;
+    display: grid;
+    grid-template-columns: 1.4fr .8fr;
+    gap: 36px;
+    align-items: center;
+}
+
+.home-eyebrow {
+    color: var(--barber-orange);
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.home-hero h1 {
+    font-size: clamp(30px, 3.2vw, 46px);
+    line-height: 1.13;
+    font-weight: 800;
+    letter-spacing: -.9px;
+    margin: 0 0 16px;
+}
+
+.home-description {
+    font-size: 15px;
+    color: var(--barber-muted);
+    margin-bottom: 24px;
+}
+
+.home-button {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 30px;
+    background: var(--barber-orange);
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+    .home-button:hover {
+        background: #f45d34;
+        color: white;
+    }
+
+.home-hero-image {
+    background: #f4d8c8;
+    min-height: 235px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.home-services {
+    padding-top: 24px;
+}
+
+    .home-services h2 {
+        font-size: 23px;
+        font-weight: 800;
+        margin-bottom: 17px;
+    }
+
+.home-service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.home-service-card {
+    border: 1px solid #e9e4df;
+    border-radius: 14px;
+    background: #fff;
+    padding: 20px;
+}
+
+    .home-service-card h3 {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .home-service-card p {
+        font-size: 12px;
+        color: var(--barber-muted);
+        margin-bottom: 16px;
+    }
+
+.home-service-divider {
+    border-top: 1px solid #e9e4df;
+    margin-bottom: 17px;
+}
+
+.home-service-card strong {
+    display: block;
+    color: var(--barber-orange);
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.home-service-card a {
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--barber-ink);
+}
+
+    .home-service-card a:hover {
+        color: var(--barber-orange);
+    }
+
+@media (max-width: 991.98px) {
+    .navbar-actions {
+        align-items: flex-start !important;
+        padding: 12px 0;
+    }
+
+    .home-hero {
+        padding: 28px;
+        gap: 22px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .home-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .home-hero-image {
+        min-height: 190px;
+    }
+
+    .home-service-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .home-page {
+        padding-top: 18px;
+    }
+}
+
+.site-profile-link {
+    color: #142238;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+    .site-profile-link:hover {
+        color: #ff7047;
+    }
+/* ===== TRANG CHỦ: BANNER FULL WIDTH ===== */
+
+body {
+    overflow-x: hidden;
+}
+
+/* Cho phép phần nội dung trang chủ mở rộng */
+.home-fullwidth {
+    width: 100vw;
+    max-width: none;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+}
+
+    /* Slideshow chiếm toàn bộ chiều ngang */
+    .home-fullwidth .carousel,
+    .home-fullwidth .carousel-inner,
+    .home-fullwidth .carousel-item {
+        width: 100%;
+    }
+
+    .home-fullwidth .carousel-item {
+        min-height: 580px;
+    }
+
+        /* Ảnh banner */
+        .home-fullwidth .carousel-item img {
+            width: 100%;
+            height: 650px;
+            object-fit: cover;
+            display: block;
+        }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .home-fullwidth .carousel-item {
+        min-height: 420px;
+    }
+
+        .home-fullwidth .carousel-item img {
+            height: 450px;
+        }
+}
+/* ===== NAVBAR ===== */
+
+.navbar .nav-link {
+    font-family: 'Anton', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+    .navbar .nav-link:hover {
+        color: #e5a063 !important;
+    }
+
+@media (min-width: 992px) {
+    .navbar .navbar-nav {
+        gap: 10px;
+    }
+}

@@ -1,0 +1,58 @@
+/* View: Shared/_Layout.cshtml */
+
+.account-popup-dialog {
+            max-width: 650px;
+            width: calc(100% - 24px);
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .account-popup-content {
+            border: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 24px 80px rgba(0,0,0,.25)
+        }
+
+        .account-popup-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 17px 22px;
+            border-bottom: 1px solid #edf0f3;
+            background: #fff;
+            color: #172638
+        }
+
+            .account-popup-heading strong {
+                font-size: 16px
+            }
+
+        .account-popup-body {
+            padding: 0;
+            background: #fff;
+            overflow: hidden
+        }
+
+        #accountPopupFrame {
+            width: 100%;
+            height: 420px;
+            max-height: calc(100dvh - 110px);
+            display: block;
+            border: 0;
+            background: #fff
+        }
+
+        @@media(max-width:575px) {
+            .account-popup-dialog {
+                width: calc(100% - 16px)
+            }
+
+            #accountPopupFrame {
+                max-height: calc(100dvh - 90px)
+            }
+
+            .account-popup-heading {
+                padding: 14px 16px
+            }
+        }

@@ -1,0 +1,327 @@
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+
+
+<div class="duy-home">
+    <section class="duy-carousel" id="duyCarousel" aria-label="Giới thiệu DuyBarberShop" aria-roledescription="carousel">
+        <div class="duy-slide is-active" aria-hidden="false">
+            <img src="~/images/home/slide-1.jpg" alt="Thợ cắt tóc nam tại barbershop" fetchpriority="high" />
+            <div class="duy-slide-copy">
+                <div class="duy-eyebrow">DUY BARBER SHOP · PHONG CÁCH RIÊNG</div>
+                <h1 class="duy-display">CẮT TÓC NAM<br /><span>CHUYÊN NGHIỆP</span></h1>
+                <p>Thay đổi diện mạo, tự tin thể hiện phong cách của riêng bạn.</p>
+                <a asp-controller="LichDat" asp-action="Create" class="duy-primary-btn">ĐẶT LỊCH NGAY →</a>
+            </div>
+        </div>
+        <div class="duy-slide" aria-hidden="true">
+            <img src="~/images/home/slide-2.jpg" alt="Bộ dụng cụ chăm sóc tóc chuyên nghiệp" loading="lazy" />
+            <div class="duy-slide-copy">
+                <div class="duy-eyebrow">CHĂM CHÚT TỪNG CHI TIẾT</div>
+                <h1 class="duy-display">PHONG CÁCH<br /><span>ĐƯỢC TẠO NÊN</span></h1>
+                <p>Khám phá các dịch vụ cắt tóc, gội đầu và tạo kiểu dành cho nam giới.</p>
+                <a asp-controller="DichVu" asp-action="Index" class="duy-primary-btn">KHÁM PHÁ DỊCH VỤ →</a>
+            </div>
+        </div>
+        <button type="button" class="duy-arrow duy-prev" aria-label="Ảnh trước">‹</button>
+        <button type="button" class="duy-arrow duy-next" aria-label="Ảnh tiếp theo">›</button>
+        <div class="duy-dots" aria-label="Chọn ảnh">
+            <button type="button" class="duy-dot is-active" aria-label="Đến ảnh 1" aria-current="true"></button>
+            <button type="button" class="duy-dot" aria-label="Đến ảnh 2"></button>
+        </div>
+    </section>
+
+    <section class="duy-benefits" aria-label="Điểm nổi bật">
+        <div class="duy-benefit"><span class="duy-benefit-icon">✂</span><div><h3 class="duy-display">CẮT TÓC THEO PHONG CÁCH</h3><p>Chọn kiểu tóc phù hợp với bạn</p></div></div>
+        <div class="duy-benefit"><span class="duy-benefit-icon">◷</span><div><h3 class="duy-display">ĐẶT LỊCH DỄ DÀNG</h3><p>Chọn dịch vụ và thời gian trực tuyến</p></div></div>
+        <div class="duy-benefit"><span class="duy-benefit-icon">★</span><div><h3 class="duy-display">DỊCH VỤ ĐA DẠNG</h3><p>Cắt tóc, gội đầu và tạo kiểu</p></div></div>
+    </section>
+
+    <section class="duy-services" aria-labelledby="duyServicesTitle">
+        <div class="duy-services-inner">
+            <h2 id="duyServicesTitle" class="duy-display">DỊCH VỤ NỔI BẬT</h2>
+            <div class="duy-service-grid">
+                <article class="duy-service">
+                    <div class="duy-service-image">
+                        <img src="~/images/services/cat-toc-nam.jpg" alt="Dịch vụ cắt tóc nam tại DuyBarberShop" loading="lazy" />
+                    </div>
+                    <div class="duy-service-content">
+                        <h3 class="duy-display">CẮT TÓC NAM</h3>
+                        <p>30 phút</p>
+                        <strong>70.000đ</strong>
+                        <a asp-controller="DichVu" asp-action="Index">Xem dịch vụ →</a>
+                    </div>
+                </article>
+                <article class="duy-service">
+                    <div class="duy-service-image">
+                        <img src="~/images/services/goi-dau.jpg" alt="Dịch vụ gội đầu tại DuyBarberShop" loading="lazy" />
+                    </div>
+                    <div class="duy-service-content">
+                        <h3 class="duy-display">GỘI ĐẦU</h3>
+                        <p>15 phút</p>
+                        <strong>30.000đ</strong>
+                        <a asp-controller="DichVu" asp-action="Index">Xem dịch vụ →</a>
+                    </div>
+                </article>
+                <article class="duy-service">
+                    <div class="duy-service-image">
+                        <img src="~/images/services/tao-kieu.jpg" alt="Dịch vụ tạo kiểu tóc tại DuyBarberShop" loading="lazy" />
+                    </div>
+                    <div class="duy-service-content">
+                        <h3 class="duy-display">TẠO KIỂU</h3>
+                        <p>25 phút</p>
+                        <strong>50.000đ</strong>
+                        <a asp-controller="DichVu" asp-action="Index">Xem dịch vụ →</a>
+                    </div>
+                </article>
+            </div>
+            <div class="duy-all-services"><a asp-controller="DichVu" asp-action="Index" class="duy-primary-btn">XEM TẤT CẢ DỊCH VỤ →</a></div>
+        </div>
+    </section>
+
+    <section class="duy-about" id="ve-chung-toi" aria-labelledby="duyAboutTitle">
+        <div class="duy-about-inner">
+            <div class="duy-about-intro">
+                <div>
+                    <span class="duy-about-kicker">VỀ DUY BARBER SHOP</span>
+                    <h2 id="duyAboutTitle" class="duy-display">KHÔNG CHỈ LÀ<br /><span>MỘT KIỂU TÓC</span></h2>
+                    <p class="duy-about-description">DuyBarberShop mong muốn mang đến một trải nghiệm chăm sóc tóc chỉn chu, thoải mái và phù hợp với phong cách riêng của mỗi khách hàng.</p>
+                    <p class="duy-about-description">Từ không gian, trang thiết bị đến sự tận tâm của đội ngũ, chúng tôi chú trọng từng chi tiết để mỗi lần ghé thăm đều là khoảng thời gian thư giãn.</p>
+                </div>
+                <div class="duy-about-feature">
+                    <span class="duy-about-feature-label">CHĂM CHÚT TỪNG CHI TIẾT</span>
+                    <strong>PHONG CÁCH CỦA BẠN.<br />SỰ TẬN TÂM CỦA CHÚNG TÔI.</strong>
+                </div>
+            </div>
+            <div class="duy-about-grid">
+                <article class="duy-about-card duy-about-card--space">
+                    <h3 class="duy-display">KHÔNG GIAN THOÁNG MÁT, SẠCH SẼ</h3>
+                    <p>Không gian được bố trí gọn gàng, thoáng mát; khu vực phục vụ và dụng cụ được chú trọng vệ sinh, tạo cảm giác dễ chịu khi trải nghiệm dịch vụ.</p>
+                </article>
+                <article class="duy-about-card duy-about-card--equipment">
+                    <h3 class="duy-display">TRANG THIẾT BỊ HIỆN ĐẠI</h3>
+                    <p>Chú trọng sử dụng các thiết bị và dụng cụ làm tóc phù hợp, hỗ trợ quá trình cắt, gội và tạo kiểu diễn ra thuận tiện, chỉn chu.</p>
+                </article>
+                <article class="duy-about-card duy-about-card--team">
+                    <h3 class="duy-display">ĐỘI NGŨ CÓ TAY NGHỀ</h3>
+                    <p>Nhân viên am hiểu các kiểu tóc nam, lắng nghe nhu cầu và tư vấn phong cách phù hợp với gương mặt, sở thích của từng khách hàng.</p>
+                </article>
+            </div>
+            <div class="duy-about-cta">
+                <a asp-controller="DichVu" asp-action="Index" class="duy-primary-btn">KHÁM PHÁ DỊCH VỤ →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="duy-hair-section" id="ca-nhan-hoa" aria-label="Cá nhân hóa kiểu tóc theo khuôn mặt">
+        <div class="duy-hair-carousel" id="duyHairCarousel" aria-roledescription="carousel">
+            <article class="duy-hair-slide is-active" aria-hidden="false" aria-label="1 trên 5: Mặt tròn">
+                <div class="duy-hair-slide-inner">
+                    <div class="duy-hair-copy">
+                        <span class="duy-hair-eyebrow">— CÁ NHÂN HÓA KIỂU TÓC —</span>
+                        <h2 class="duy-display">GỢI Ý KIỂU TÓC PHÙ HỢP<br /><span>VỚI KHUÔN MẶT CỦA BẠN</span></h2>
+                        <div class="duy-hair-shape">Khuôn mặt tròn</div>
+                        <p>Mặt tròn thường có chiều dài và chiều rộng gần bằng nhau. Kiểu tóc có độ cao ở đỉnh giúp gương mặt trông thon gọn, sắc nét hơn.</p>
+                        <span class="duy-hair-rec-label">Gợi ý kiểu tóc phù hợp:</span>
+                        <ul class="duy-hair-recs"><li>High Fade</li><li>Undercut</li><li>Quiff</li><li>Side Part</li><li>Textured Crop</li></ul>
+                        <a asp-controller="LichDat" asp-action="Create" class="duy-hair-btn">Đặt lịch ngay ❯</a>
+                    </div>
+                    <div class="duy-hair-hero"><img src="~/images/face-shapes/mat-tron.jpg" alt="Minh họa kiểu tóc cho khuôn mặt tròn" loading="lazy" /></div>
+                    <div class="duy-hair-gallery" aria-label="Các kiểu tóc tham khảo">
+                        <img src="~/images/face-shapes/goi-y-1.jpg" alt="Kiểu tóc tham khảo 1 cho mặt tròn" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-2.jpg" alt="Kiểu tóc tham khảo 2 cho mặt tròn" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-3.jpg" alt="Kiểu tóc tham khảo 3 cho mặt tròn" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-4.jpg" alt="Kiểu tóc tham khảo 4 cho mặt tròn" loading="lazy" />
+                    </div>
+                </div>
+            </article>
+            <article class="duy-hair-slide" aria-hidden="true" aria-label="2 trên 5: Mặt vuông">
+                <div class="duy-hair-slide-inner">
+                    <div class="duy-hair-copy">
+                        <span class="duy-hair-eyebrow">— CÁ NHÂN HÓA KIỂU TÓC —</span>
+                        <h2 class="duy-display">GỢI Ý KIỂU TÓC PHÙ HỢP<br /><span>VỚI KHUÔN MẶT CỦA BẠN</span></h2>
+                        <div class="duy-hair-shape">Khuôn mặt vuông</div>
+                        <p>Khuôn mặt vuông nổi bật với đường hàm góc cạnh. Có thể chọn kiểu tóc tạo kết cấu mềm mại hoặc tôn lên vẻ nam tính.</p>
+                        <span class="duy-hair-rec-label">Gợi ý kiểu tóc phù hợp:</span>
+                        <ul class="duy-hair-recs"><li>Textured Crop</li><li>Side Part</li><li>Crew Cut</li><li>Pompadour</li></ul>
+                        <a asp-controller="LichDat" asp-action="Create" class="duy-hair-btn" tabindex="-1">Đặt lịch ngay ❯</a>
+                    </div>
+                    <div class="duy-hair-hero"><img src="~/images/face-shapes/mat-vuong.jpg" alt="Minh họa kiểu tóc cho khuôn mặt vuông" loading="lazy" /></div>
+                    <div class="duy-hair-gallery" aria-label="Các kiểu tóc tham khảo">
+                        <img src="~/images/face-shapes/goi-y-2.jpg" alt="Kiểu tóc tham khảo 1 cho mặt vuông" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-3.jpg" alt="Kiểu tóc tham khảo 2 cho mặt vuông" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-4.jpg" alt="Kiểu tóc tham khảo 3 cho mặt vuông" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-1.jpg" alt="Kiểu tóc tham khảo 4 cho mặt vuông" loading="lazy" />
+                    </div>
+                </div>
+            </article>
+            <article class="duy-hair-slide" aria-hidden="true" aria-label="3 trên 5: Mặt dài">
+                <div class="duy-hair-slide-inner">
+                    <div class="duy-hair-copy">
+                        <span class="duy-hair-eyebrow">— CÁ NHÂN HÓA KIỂU TÓC —</span>
+                        <h2 class="duy-display">GỢI Ý KIỂU TÓC PHÙ HỢP<br /><span>VỚI KHUÔN MẶT CỦA BẠN</span></h2>
+                        <div class="duy-hair-shape">Khuôn mặt dài</div>
+                        <p>Với khuôn mặt dài, nên hạn chế tóc đỉnh quá cao. Phần mái và độ phồng hai bên giúp cân đối tỷ lệ khuôn mặt.</p>
+                        <span class="duy-hair-rec-label">Gợi ý kiểu tóc phù hợp:</span>
+                        <ul class="duy-hair-recs"><li>French Crop</li><li>Textured Fringe</li><li>Layer</li><li>Side Swept</li></ul>
+                        <a asp-controller="LichDat" asp-action="Create" class="duy-hair-btn" tabindex="-1">Đặt lịch ngay ❯</a>
+                    </div>
+                    <div class="duy-hair-hero"><img src="~/images/face-shapes/mat-dai.jpg" alt="Minh họa kiểu tóc cho khuôn mặt dài" loading="lazy" /></div>
+                    <div class="duy-hair-gallery" aria-label="Các kiểu tóc tham khảo">
+                        <img src="~/images/face-shapes/goi-y-3.jpg" alt="Kiểu tóc tham khảo 1 cho mặt dài" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-4.jpg" alt="Kiểu tóc tham khảo 2 cho mặt dài" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-1.jpg" alt="Kiểu tóc tham khảo 3 cho mặt dài" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-2.jpg" alt="Kiểu tóc tham khảo 4 cho mặt dài" loading="lazy" />
+                    </div>
+                </div>
+            </article>
+            <article class="duy-hair-slide" aria-hidden="true" aria-label="4 trên 5: Mặt trán cao">
+                <div class="duy-hair-slide-inner">
+                    <div class="duy-hair-copy">
+                        <span class="duy-hair-eyebrow">— CÁ NHÂN HÓA KIỂU TÓC —</span>
+                        <h2 class="duy-display">GỢI Ý KIỂU TÓC PHÙ HỢP<br /><span>VỚI KHUÔN MẶT CỦA BẠN</span></h2>
+                        <div class="duy-hair-shape">Khuôn mặt trán cao</div>
+                        <p>Mái rủ hoặc mái lệch giúp cân bằng phần trán, tạo vẻ trẻ trung và hài hòa với các đường nét khuôn mặt.</p>
+                        <span class="duy-hair-rec-label">Gợi ý kiểu tóc phù hợp:</span>
+                        <ul class="duy-hair-recs"><li>French Crop</li><li>Comma Hair</li><li>Two Block</li><li>Mái Layer</li></ul>
+                        <a asp-controller="LichDat" asp-action="Create" class="duy-hair-btn" tabindex="-1">Đặt lịch ngay ❯</a>
+                    </div>
+                    <div class="duy-hair-hero"><img src="~/images/face-shapes/mat-tran-cao.jpg" alt="Minh họa kiểu tóc cho khuôn mặt trán cao" loading="lazy" /></div>
+                    <div class="duy-hair-gallery" aria-label="Các kiểu tóc tham khảo">
+                        <img src="~/images/face-shapes/goi-y-4.jpg" alt="Kiểu tóc tham khảo 1 cho mặt trán cao" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-1.jpg" alt="Kiểu tóc tham khảo 2 cho mặt trán cao" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-2.jpg" alt="Kiểu tóc tham khảo 3 cho mặt trán cao" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-3.jpg" alt="Kiểu tóc tham khảo 4 cho mặt trán cao" loading="lazy" />
+                    </div>
+                </div>
+            </article>
+            <article class="duy-hair-slide" aria-hidden="true" aria-label="5 trên 5: Mặt trái xoan">
+                <div class="duy-hair-slide-inner">
+                    <div class="duy-hair-copy">
+                        <span class="duy-hair-eyebrow">— CÁ NHÂN HÓA KIỂU TÓC —</span>
+                        <h2 class="duy-display">GỢI Ý KIỂU TÓC PHÙ HỢP<br /><span>VỚI KHUÔN MẶT CỦA BẠN</span></h2>
+                        <div class="duy-hair-shape">Khuôn mặt trái xoan</div>
+                        <p>Khuôn mặt trái xoan có tỷ lệ hài hòa và phù hợp nhiều phong cách. Hãy chọn theo chất tóc, sở thích và thời gian chăm sóc.</p>
+                        <span class="duy-hair-rec-label">Gợi ý kiểu tóc phù hợp:</span>
+                        <ul class="duy-hair-recs"><li>Middle Part</li><li>Undercut</li><li>Quiff</li><li>Slick Back</li></ul>
+                        <a asp-controller="LichDat" asp-action="Create" class="duy-hair-btn" tabindex="-1">Đặt lịch ngay ❯</a>
+                    </div>
+                    <div class="duy-hair-hero"><img src="~/images/face-shapes/mat-trai-xoan.jpg" alt="Minh họa kiểu tóc cho khuôn mặt trái xoan" loading="lazy" /></div>
+                    <div class="duy-hair-gallery" aria-label="Các kiểu tóc tham khảo">
+                        <img src="~/images/face-shapes/goi-y-1.jpg" alt="Kiểu tóc tham khảo 1 cho mặt trái xoan" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-2.jpg" alt="Kiểu tóc tham khảo 2 cho mặt trái xoan" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-3.jpg" alt="Kiểu tóc tham khảo 3 cho mặt trái xoan" loading="lazy" />
+                        <img src="~/images/face-shapes/goi-y-4.jpg" alt="Kiểu tóc tham khảo 4 cho mặt trái xoan" loading="lazy" />
+                    </div>
+                </div>
+            </article>
+            <button type="button" class="duy-hair-arrow duy-hair-prev" aria-label="Khuôn mặt trước">&#8249;</button>
+            <button type="button" class="duy-hair-arrow duy-hair-next" aria-label="Khuôn mặt tiếp theo">&#8250;</button>
+            <div class="duy-hair-dots" aria-label="Chọn khuôn mặt">
+                <button type="button" class="duy-hair-dot is-active" aria-label="TRÒN" aria-current="true"></button>
+                <button type="button" class="duy-hair-dot" aria-label="VUÔNG"></button>
+                <button type="button" class="duy-hair-dot" aria-label="DÀI"></button>
+                <button type="button" class="duy-hair-dot" aria-label="TRÁN CAO"></button>
+                <button type="button" class="duy-hair-dot" aria-label="TRÁI XOAN"></button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    (() => {
+        const carousel = document.getElementById('duyCarousel');
+        if (!carousel) return;
+        const slides = [...carousel.querySelectorAll('.duy-slide')];
+        const dots = [...carousel.querySelectorAll('.duy-dot')];
+        let current = 0;
+        let timer;
+        function show(index) {
+            current = (index + slides.length) % slides.length;
+            slides.forEach((slide, i) => {
+                const active = i === current;
+                slide.classList.toggle('is-active', active);
+                slide.setAttribute('aria-hidden', String(!active));
+                slide.querySelectorAll('a').forEach(a => a.tabIndex = active ? 0 : -1);
+                dots[i].classList.toggle('is-active', active);
+                if (active) dots[i].setAttribute('aria-current', 'true');
+                else dots[i].removeAttribute('aria-current');
+            });
+        }
+        function stop() { clearInterval(timer); }
+        function start() {
+            stop();
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            timer = setInterval(() => show(current + 1), 5000);
+        }
+        function move(delta) { show(current + delta); start(); }
+        carousel.querySelector('.duy-prev').addEventListener('click', () => move(-1));
+        carousel.querySelector('.duy-next').addEventListener('click', () => move(1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); start(); }));
+        let touchStartX = null;
+        carousel.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        carousel.addEventListener('touchend', e => {
+            if (touchStartX === null) return;
+            const distance = e.changedTouches[0].screenX - touchStartX;
+            if (Math.abs(distance) > 45) move(distance < 0 ? 1 : -1);
+            touchStartX = null;
+        }, { passive: true });
+        carousel.addEventListener('mouseenter', stop);
+        carousel.addEventListener('mouseleave', start);
+        carousel.addEventListener('focusin', stop);
+        carousel.addEventListener('focusout', e => { if (!carousel.contains(e.relatedTarget)) start(); });
+        document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+        show(0); start();
+    })();
+</script>
+
+<script>
+    (() => {
+        const root = document.getElementById('duyHairCarousel');
+        if (!root) return;
+        const slides = Array.from(root.querySelectorAll('.duy-hair-slide'));
+        const dots = Array.from(root.querySelectorAll('.duy-hair-dot'));
+        let current = 0, timer;
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+        function show(index) {
+            current = (index + slides.length) % slides.length;
+            slides.forEach((slide, i) => {
+                const active = i === current;
+                slide.classList.toggle('is-active', active);
+                slide.setAttribute('aria-hidden', String(!active));
+                slide.querySelectorAll('a').forEach(link => link.tabIndex = active ? 0 : -1);
+                dots[i].classList.toggle('is-active', active);
+                if (active) dots[i].setAttribute('aria-current', 'true');
+                else dots[i].removeAttribute('aria-current');
+            });
+        }
+        function stop() { clearInterval(timer); }
+        function start() {
+            stop();
+            if (!document.hidden && !reduced.matches) timer = setInterval(() => show(current + 1), 5000);
+        }
+        function move(delta) { show(current + delta); start(); }
+        root.querySelector('.duy-hair-prev').addEventListener('click', () => move(-1));
+        root.querySelector('.duy-hair-next').addEventListener('click', () => move(1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); start(); }));
+        let startX = null;
+        root.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; }, { passive:true });
+        root.addEventListener('touchend', e => {
+            if (startX === null) return;
+            const distance = e.changedTouches[0].screenX - startX;
+            if (Math.abs(distance) > 45) move(distance < 0 ? 1 : -1);
+            startX = null;
+        }, { passive:true });
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', start);
+        root.addEventListener('focusin', stop);
+        root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) start(); });
+        document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+        show(0); start();
+    })();
+</script>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/TrangChu/Index.css" asp-append-version="true" />
+}

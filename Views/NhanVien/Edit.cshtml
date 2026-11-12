@@ -1,0 +1,63 @@
+@model DuyBarberShop.ViewModels.SuaNhanVienViewModel
+@{
+    ViewData["Title"] = "Chỉnh sửa nhân viên";
+    Layout = "_AdminLayout";
+}
+
+<div class="nv-page">
+    <div class="nv-form-layout">
+        <div class="nv-heading">
+            <div>
+                <h1>Chỉnh sửa nhân viên</h1>
+                <p class="nv-muted">Cập nhật thông tin nhân viên của DuyBarberShop.</p>
+            </div>
+            <a asp-controller="NhanVien" asp-action="Index" class="nv-btn-outline">Quay lại danh sách</a>
+        </div>
+        <section class="nv-card nv-form-card">
+            <div class="nv-card-header">
+                <h2>Thông tin nhân viên</h2>
+                <p class="nv-muted">Chỉnh sửa thông tin và trạng thái làm việc.</p>
+            </div>
+            <div class="nv-form-body">
+                <form asp-controller="NhanVien" asp-action="Edit" asp-route-id="@Model.MaNhanVien" method="post">
+                    <input type="hidden" asp-for="MaNhanVien" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <div class="nv-field">
+                        <label asp-for="HoTen" class="form-label">Họ tên</label>
+                        <input asp-for="HoTen" class="form-control" />
+                        <span asp-validation-for="HoTen" class="text-danger small"></span>
+                    </div>
+                    <div class="nv-form-grid">
+                        <div class="nv-field">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+                        <div class="nv-field">
+                            <label asp-for="SoDienThoai" class="form-label">Số điện thoại</label>
+                            <input asp-for="SoDienThoai" class="form-control" />
+                            <span asp-validation-for="SoDienThoai" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    <div class="nv-switch-wrap mb-4">
+                        <div class="form-check form-switch mb-0">
+                            <input asp-for="TrangThaiLamViec" class="form-check-input" />
+                            <label asp-for="TrangThaiLamViec" class="form-check-label fw-semibold">Đang làm việc</label>
+                        </div>
+                    </div>
+                    <div class="nv-form-footer">
+                        <a asp-controller="NhanVien" asp-action="Index" class="nv-btn-outline">Hủy</a>
+                        <button type="submit" class="nv-btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/shared/employee-form.css" asp-append-version="true" />
+}

@@ -1,0 +1,333 @@
+/* View: ThongKe/Index.cshtml */
+
+.tk-page {
+        color: #243044;
+        padding-bottom: 32px;
+    }
+
+    .tk-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+        .tk-heading h1 {
+            margin: 0 0 6px;
+            font-size: 27px;
+            font-weight: 750;
+            letter-spacing: -.6px;
+        }
+
+        .tk-heading p {
+            margin: 0;
+            color: #8490a1;
+            font-size: 14px;
+        }
+
+    .tk-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff;
+        border: 1px solid #e9edf2;
+        border-radius: 9px;
+        padding: 10px 14px;
+        font-size: 13px;
+        color: #667085;
+    }
+
+    .tk-tag-dot {
+        width: 8px;
+        height: 8px;
+        background: #f47b45;
+        border-radius: 50%;
+    }
+
+    .tk-filter {
+        display: flex;
+        align-items: end;
+        flex-wrap: wrap;
+        gap: 12px;
+        background: #fff;
+        border: 1px solid #e9edf2;
+        border-radius: 14px;
+        padding: 18px 20px;
+        margin-bottom: 20px;
+    }
+
+    .tk-filter-field {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+        .tk-filter-field label {
+            font-size: 13px;
+            font-weight: 650;
+            color: #5b6778;
+        }
+
+        .tk-filter-field input {
+            min-width: 205px;
+            height: 40px;
+            border: 1px solid #dfe4ec;
+            border-radius: 9px;
+            padding: 8px 12px;
+            color: #243044;
+            background: #fff;
+        }
+
+    .tk-filter-btn {
+        height: 40px;
+        padding: 0 19px;
+        background: #f47b45;
+        border: 1px solid #f47b45;
+        color: #fff;
+        border-radius: 9px;
+        font-weight: 650;
+        cursor: pointer;
+    }
+
+        .tk-filter-btn:hover {
+            background: #e86c37;
+        }
+
+    .tk-filter-reset {
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 16px;
+        border: 1px solid #e1e5eb;
+        border-radius: 9px;
+        color: #657184;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+        .tk-filter-reset:hover {
+            background: #f8fafc;
+            color: #243044;
+        }
+
+    .tk-filter-caption {
+        margin-left: auto;
+        color: #8994a5;
+        font-size: 12px;
+        align-self: center;
+    }
+
+    .tk-overview {
+        display: grid;
+        grid-template-columns: repeat(3,minmax(0,1fr));
+        gap: 18px;
+        margin-bottom: 20px;
+    }
+
+    .tk-card {
+        background: #fff;
+        border: 1px solid #e9edf2;
+        border-radius: 14px;
+        padding: 23px 24px;
+        box-shadow: 0 2px 10px rgba(18,33,59,.025);
+        min-width: 0;
+    }
+
+    .tk-card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .tk-label {
+        margin: 0 0 12px;
+        font-size: 13px;
+        font-weight: 550;
+        color: #778396;
+    }
+
+    .tk-number {
+        font-size: 32px;
+        line-height: 1.15;
+        font-weight: 750;
+        letter-spacing: -.8px;
+        margin: 0;
+        color: #1e293b;
+    }
+
+    .tk-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        border-radius: 12px;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .tk-hint {
+        font-size: 12px;
+        color: #9aa4b2;
+        margin-top: 15px;
+    }
+
+    .tk-money-card {
+        background: linear-gradient(120deg,#fff8f3,#fff);
+        border-color: #ffdfca;
+    }
+
+        .tk-money-card .tk-number {
+            color: #e86c37;
+            font-size: clamp(24px,2.5vw,32px);
+            overflow-wrap: anywhere;
+        }
+
+    .tk-section {
+        display: grid;
+        grid-template-columns: minmax(0,.9fr) minmax(0,1.3fr);
+        gap: 18px;
+    }
+
+    .tk-panel-title {
+        font-size: 17px;
+        font-weight: 700;
+        margin: 0 0 6px;
+    }
+
+    .tk-panel-subtitle {
+        font-size: 13px;
+        color: #929bad;
+        margin: 0 0 24px;
+    }
+
+    .tk-service-row {
+        margin-bottom: 21px;
+    }
+
+    .tk-service-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 13px;
+        margin-bottom: 9px;
+    }
+
+    .tk-service-name {
+        color: #4b596d;
+        overflow-wrap: anywhere;
+    }
+
+    .tk-service-count {
+        font-weight: 700;
+        white-space: nowrap;
+        color: #273244;
+    }
+
+    .tk-track {
+        height: 9px;
+        border-radius: 99px;
+        background: #f0f2f6;
+        overflow: hidden;
+    }
+
+    .tk-fill {
+        height: 100%;
+        background: #f47b45;
+        border-radius: 99px;
+    }
+
+    .tk-chart {
+        display: grid;
+        grid-template-columns: repeat(12,minmax(0,1fr));
+        gap: 8px;
+        height: 250px;
+        align-items: end;
+        border-bottom: 1px solid #e7ebf1;
+        padding-top: 15px;
+    }
+
+    .tk-chart-col {
+        min-width: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .tk-chart-value {
+        font-size: 10px;
+        color: #7b8798;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .tk-chart-bar-wrap {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+    }
+
+    .tk-chart-bar {
+        width: min(100%,34px);
+        min-height: 3px;
+        border-radius: 6px 6px 0 0;
+        background: linear-gradient(180deg,#f7a06f,#ef7844);
+    }
+
+    .tk-chart-label {
+        color: #718096;
+        font-size: 12px;
+        margin-bottom: -24px;
+        transform: translateY(24px);
+    }
+
+    .tk-empty {
+        color: #97a2b2;
+        font-size: 13px;
+        padding: 30px 0;
+        text-align: center;
+    }
+
+    @@media (max-width:1050px) {
+        .tk-section {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media (max-width:850px) {
+        .tk-overview {
+            grid-template-columns: repeat(2,minmax(0,1fr));
+        }
+    }
+
+    @@media (max-width:560px) {
+        .tk-overview {
+            grid-template-columns: 1fr;
+        }
+
+        .tk-card {
+            padding: 19px;
+        }
+
+        .tk-chart {
+            gap: 3px;
+        }
+
+        .tk-chart-value {
+            display: none;
+        }
+
+        .tk-chart-label {
+            font-size: 10px;
+        }
+    }

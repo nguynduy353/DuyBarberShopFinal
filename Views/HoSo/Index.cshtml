@@ -1,0 +1,19 @@
+@model DuyBarberShop.ViewModels.HoSoViewModel
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+}
+
+<div class="account-shell"><div class="account-wrap"><div class="account-panel"><aside class="account-aside"><div class="account-logo">DUY<span style="color:#ffe0d5">BARBER</span></div><div><h2>Thông tin của bạn, luôn trong tầm tay</h2><p>Cập nhật thông tin liên hệ để việc đặt lịch và nhận hỗ trợ thuận tiện hơn.</p></div><small>DUY BARBER SHOP · Phong cách của bạn, sự tận tâm của chúng tôi.</small></aside><section class="account-main"><div class="account-eyebrow">Tài khoản khách hàng</div><h1>Hồ sơ cá nhân</h1><p class="account-lead">Xem và cập nhật thông tin tài khoản của bạn.</p>@if (TempData["Success"] != null) {
+    <div class="account-notice">@TempData["Success"]</div>
+}
+<form asp-controller="HoSo" asp-action="Index" method="post">@Html.AntiForgeryToken()<div asp-validation-summary="ModelOnly" class="account-error"></div><div class="account-field"><label asp-for="HoTen"></label><input asp-for="HoTen" class="account-input" placeholder="Họ và tên" /><span asp-validation-for="HoTen" class="account-error"></span></div><div class="account-grid"><div class="account-field"><label asp-for="Email"></label><input asp-for="Email" class="account-input" placeholder="" readonly /></div><div class="account-field"><label asp-for="SoDienThoai"></label><input asp-for="SoDienThoai" class="account-input" placeholder="Số điện thoại" /><span asp-validation-for="SoDienThoai" class="account-error"></span></div></div><div class="account-field"><label asp-for="VaiTro"></label><input asp-for="VaiTro" class="account-input" placeholder="" readonly /></div><div class="account-actions"><button type="submit" class="account-btn">Lưu thay đổi</button><a asp-controller="HoSo" asp-action="ChangePassword" class="account-btn account-btn-outline">Đổi mật khẩu</a></div></form></section></div></div></div>
+<script>
+    document.querySelectorAll('.account-eye').forEach(function(button) { button.addEventListener('click', function() { var input = document.getElementById(button.getAttribute('data-target')); if (!input) return; var shown = input.type === 'text'; input.type = shown ? 'password' : 'text'; button.textContent = shown ? 'Hiện' : 'Ẩn'; button.setAttribute('aria-label', shown ? 'Hiện mật khẩu' : 'Ẩn mật khẩu'); }); });
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/views/shared/account-forms.css" asp-append-version="true" />
+}
